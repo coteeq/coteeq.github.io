@@ -1,0 +1,59 @@
+<HTML>
+<BODY>
+<PRE>
+<!-- Manpage converted by man2html 3.0.1 -->
+
+
+</PRE>
+<H2>SYNOPSIS</H2><PRE>
+       <B>#include</B> <B>&lt;liburing.h&gt;</B>
+
+       <B>bool</B> <B>io_uring_check_version(int</B> <I>major</I><B>,</B> <B>int</B> <I>minor</I><B>);</B>
+       <B>IO_URING_CHECK_VERSION(</B><I>major</I><B>,</B> <I>minor</I><B>);</B>
+
+       <B>int</B> <B>io_uring_major_version(void);</B>
+       <B>IO_URING_VERSION_MAJOR;</B>
+
+       <B>int</B> <B>io_uring_minor_version(void);</B>
+       <B>IO_URING_VERSION_MINOR;</B>
+
+
+</PRE>
+<H2>DESCRIPTION</H2><PRE>
+       The <B><A HREF="io_uring_check_version.3.html">io_uring_check_version(3)</A></B> function returns <I>true</I> if the liburing
+       library loaded by the dynamic linker is greater-than or equal-to the
+       <I>major</I> and <I>minor</I> numbers provided.
+
+
+       The <B><A HREF="IO_URING_CHECK_VERSION.3.html">IO_URING_CHECK_VERSION(3)</A></B> macro returns <I>1</I> if the liburing library
+       being compiled against is greater-than or equal-to the <I>major</I> and <I>minor</I>
+       numbers provided.
+
+
+       The <B><A HREF="io_uring_major_version.3.html">io_uring_major_version(3)</A></B> function returns the <I>major</I> version number
+       of the liburing library loaded by the dynamic linker.
+
+
+       The <B><A HREF="IO_URING_VERSION_MAJOR.3.html">IO_URING_VERSION_MAJOR(3)</A></B> macro returns the <I>major</I> version number of
+       the liburing library being compiled against.
+
+
+       The <B><A HREF="io_uring_minor_version.3.html">io_uring_minor_version(3)</A></B> function returns the <I>minor</I> version number
+       of the liburing library loaded by the dynamic linker.
+
+
+       The <B><A HREF="IO_URING_VERSION_MINOR.3.html">IO_URING_VERSION_MINOR(3)</A></B> macro returns the <I>minor</I> version number of
+       the liburing library being compiled against.
+
+
+
+
+liburing-2.4                    December 1, 2022       <B><A HREF="io_uring_check_version.3.html">io_uring_check_version(3)</A></B>
+</PRE>
+<HR>
+<ADDRESS>
+Man(1) output converted with
+<a href="http://www.oac.uci.edu/indiv/ehood/man2html.html">man2html</a>
+</ADDRESS>
+</BODY>
+</HTML>

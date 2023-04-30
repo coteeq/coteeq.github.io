@@ -1,0 +1,64 @@
+<HTML>
+<BODY>
+<PRE>
+<!-- Manpage converted by man2html 3.0.1 -->
+
+</PRE>
+<H2>SYNOPSIS</H2><PRE>
+       <B>#include</B> <B>&lt;sched.h&gt;</B>
+       <B>#include</B> <B>&lt;liburing.h&gt;</B>
+
+       <B>int</B> <B>io_uring_register_iowq_aff(struct</B> <B>io_uring</B> <B>*</B><I>ring</I><B>,</B>
+                                      <B>size_t</B> <I>cpusz</I><B>,</B>
+                                      <B>const</B> <B>cpu_set_t</B> <B>*</B><I>mask</I><B>);</B>
+
+       <B>void</B> <B>io_uring_unregister_iowq_aff(struct</B> <B>io_uring</B> <B>*</B><I>ring</I><B>);</B>
+
+
+</PRE>
+<H2>DESCRIPTION</H2><PRE>
+       The <B><A HREF="io_uring_prep_register_iowq_aff.3.html">io_uring_prep_register_iowq_aff(3)</A></B> function registers a set of CPU
+       affinities to be used by the io_uring async workers. By default, io_uring
+       async workers are allowed to run on any CPU in the system. If this
+       function is called with <I>ring</I> set to the ring in question and <I>mask</I> set to
+       a pointer to a <B>cpu_set_t</B> value and <I>cpusz</I> set to the size of the CPU set,
+       then async workers will only be allowed to run on the CPUs specified in
+       the mask. Existing workers may need to hit a schedule point before they
+       are migrated.
+
+       For unregistration, <B><A HREF="io_uring_unregister_iowq_aff.3.html">io_uring_unregister_iowq_aff(3)</A></B> may be called to
+       restore CPU affinities to the default.
+
+
+
+</PRE>
+<H2>RETURN VALUE</H2><PRE>
+       Returns <B>0</B> on success, or any of the following values in case of error.
+
+       <B>-EFAULT</B>
+              The kernel was unable to copy the memory pointer to by <I>mask</I> as it
+              was invalid.
+
+       <B>-ENOMEM</B>
+              The kernel was unable to allocate memory for the new CPU mask.
+
+       <B>-EINVAL</B>
+              <I>cpusz</I> or <I>mask</I> was NULL/0, or any other value specified was
+              invalid.
+
+
+</PRE>
+<H2>SEE ALSO</H2><PRE>
+       <B><A HREF="io_uring_queue_init.3.html">io_uring_queue_init(3)</A></B>, <B><A HREF="io_uring_register.2.html">io_uring_register(2)</A></B>
+
+
+
+liburing-2.2                     March 13, 2022    <B><A HREF="io_uring_register_iowq_aff.3.html">io_uring_register_iowq_aff(3)</A></B>
+</PRE>
+<HR>
+<ADDRESS>
+Man(1) output converted with
+<a href="http://www.oac.uci.edu/indiv/ehood/man2html.html">man2html</a>
+</ADDRESS>
+</BODY>
+</HTML>

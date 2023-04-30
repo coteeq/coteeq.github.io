@@ -1,0 +1,77 @@
+<HTML>
+<BODY>
+<PRE>
+<!-- Manpage converted by man2html 3.0.1 -->
+
+</PRE>
+<H2>SYNOPSIS</H2><PRE>
+       <B>#include</B> <B>&lt;poll.h&gt;</B>
+       <B>#include</B> <B>&lt;liburing.h&gt;</B>
+
+       <B>void</B> <B>io_uring_prep_poll_update(struct</B> <B>io_uring_sqe</B> <B>*</B><I>sqe</I><B>,</B>
+                                      <B>__u64</B> <I>old</I><B>_</B><I>user</I><B>_</B><I>data</I><B>,</B>
+                                      <B>__u64</B> <I>new</I><B>_</B><I>user</I><B>_</B><I>data</I><B>,</B>
+                                      <B>unsigned</B> <I>poll</I><B>_</B><I>mask</I><B>,</B>
+                                      <B>unsigned</B> <I>flags</I><B>);</B>
+
+
+</PRE>
+<H2>DESCRIPTION</H2><PRE>
+       The <B><A HREF="io_uring_prep_poll_update.3.html">io_uring_prep_poll_update(3)</A></B> function prepares a poll update request.
+       The submission queue entry <I>sqe</I> is setup to update a poll request
+       identified by <I>old</I><B>_</B><I>user</I><B>_</B><I>data</I>, replacing it with the <I>new</I><B>_</B><I>user</I><B>_</B><I>data</I>
+       information. The <I>poll</I><B>_</B><I>mask</I> arguments contains the new mask to use for the
+       poll request, and <I>flags</I> argument contains modifier flags telling io_uring
+       what fields to update.
+
+       The <I>flags</I> modifier flags is a bitmask and may contain and OR'ed mask of:
+
+       <B>IORING_POLL_UPDATE_EVENTS</B>
+              If set, the poll update request will replace the existing events
+              being waited for with the ones specified in the <I>poll</I><B>_</B><I>mask</I> argument
+              to the function.
+
+       <B>IORING_POLL_UPDATE_USER_DATA</B>
+              If set, the poll update request will update the existing user_data
+              of the request with the value passed in as the <I>new</I><B>_</B><I>user</I><B>_</B><I>data</I>
+              argument.
+
+       <B>IORING_POLL_ADD_MULTI</B>
+              If set, this will change the poll request from a singleshot to a
+              multishot request. This must be used along with
+              <B>IORING_POLL_UPDATE_EVENTS</B> as the event field must be updated to
+              enable multishot.
+
+
+
+</PRE>
+<H2>RETURN VALUE</H2><PRE>
+       None
+
+
+</PRE>
+<H2>ERRORS</H2><PRE>
+       These are the errors that are reported in the CQE <I>res</I> field. On success,
+       <B>0</B> is returned.
+
+       <B>-ENOENT</B>
+              The request identified by <I>user</I><B>_</B><I>data</I> could not be located. This
+              could be because it completed before the cancelation request was
+              issued, or if an invalid identifier is used.
+
+       <B>-EINVAL</B>
+              One of the fields set in the SQE was invalid.
+
+       <B><A HREF="io_uring_prep_poll_multishot.3.html">io_uring_prep_poll_multishot(3)</A></B>
+
+
+
+liburing-2.2                     March 12, 2022     <B><A HREF="io_uring_prep_poll_update.3.html">io_uring_prep_poll_update(3)</A></B>
+</PRE>
+<HR>
+<ADDRESS>
+Man(1) output converted with
+<a href="http://www.oac.uci.edu/indiv/ehood/man2html.html">man2html</a>
+</ADDRESS>
+</BODY>
+</HTML>

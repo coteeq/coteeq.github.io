@@ -1,0 +1,47 @@
+<HTML>
+<BODY>
+<PRE>
+<!-- Manpage converted by man2html 3.0.1 -->
+
+
+</PRE>
+<H2>SYNOPSIS</H2><PRE>
+       <B>#include</B> <B>&lt;liburing.h&gt;</B>
+
+       <B>int</B> <B>io_uring_submit_and_get_events(struct</B> <B>io_uring</B> <B>*</B><I>ring</I><B>);</B>
+
+
+
+</PRE>
+<H2>DESCRIPTION</H2><PRE>
+       The <B><A HREF="io_uring_submit_and_get_events.3.html">io_uring_submit_and_get_events(3)</A></B> function submits the next events to
+       the submission queue as with <B><A HREF="io_uring_submit.3.html">io_uring_submit(3)</A></B><B>.</B>  After submission it
+       will flush CQEs as with <B><A HREF="io_uring_get_events.3.html">io_uring_get_events(3)</A></B><B>.</B>
+
+       The benefit of this function is that it does both with only one system
+       call.
+
+
+
+</PRE>
+<H2>RETURN VALUE</H2><PRE>
+       On success <B><A HREF="io_uring_submit_and_get_events.3.html">io_uring_submit_and_get_events(3)</A></B> returns the number of
+       submitted submission queue entries. On failure it returns <B>-errno</B>.
+
+
+</PRE>
+<H2>SEE ALSO</H2><PRE>
+       <B><A HREF="io_uring_submit.3.html">io_uring_submit(3)</A></B>, <B><A HREF="io_uring_get_events.3.html">io_uring_get_events(3)</A></B>
+
+
+
+liburing-2.3                    September 5, 2022
+                                               <B><A HREF="io_uring_submit_and_get_events.3.html">io_uring_submit_and_get_events(3)</A></B>
+</PRE>
+<HR>
+<ADDRESS>
+Man(1) output converted with
+<a href="http://www.oac.uci.edu/indiv/ehood/man2html.html">man2html</a>
+</ADDRESS>
+</BODY>
+</HTML>

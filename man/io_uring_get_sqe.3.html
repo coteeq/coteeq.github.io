@@ -1,0 +1,57 @@
+<HTML>
+<BODY>
+<PRE>
+<!-- Manpage converted by man2html 3.0.1 -->
+
+
+</PRE>
+<H2>SYNOPSIS</H2><PRE>
+       <B>#include</B> <B>&lt;liburing.h&gt;</B>
+
+       <B>struct</B> <B>io_uring_sqe</B> <B>*io_uring_get_sqe(struct</B> <B>io_uring</B> <B>*</B><I>ring</I><B>);</B>
+
+
+</PRE>
+<H2>DESCRIPTION</H2><PRE>
+       The <B><A HREF="io_uring_get_sqe.3.html">io_uring_get_sqe(3)</A></B> function gets the next available submission queue
+       entry from the submission queue belonging to the <I>ring</I> param.
+
+       On success <B><A HREF="io_uring_get_sqe.3.html">io_uring_get_sqe(3)</A></B> returns a pointer to the submission queue
+       entry. On failure NULL is returned.
+
+       If a submission queue entry is returned, it should be filled out via one
+       of the prep functions such as <B><A HREF="io_uring_prep_read.3.html">io_uring_prep_read(3)</A></B> and submitted via
+       <B><A HREF="io_uring_submit.3.html">io_uring_submit(3)</A></B>.
+
+       Note that neither <B>io_uring_get_sqe</B> nor the prep functions set (or clear)
+       the <B>user_data</B> field of the SQE. If the caller expects
+       <B><A HREF="io_uring_cqe_get_data.3.html">io_uring_cqe_get_data(3)</A></B> or <B><A HREF="io_uring_cqe_get_data64.3.html">io_uring_cqe_get_data64(3)</A></B> to return valid
+       data when reaping IO completions, either <B><A HREF="io_uring_sqe_set_data.3.html">io_uring_sqe_set_data(3)</A></B> or
+       <B><A HREF="io_uring_sqe_set_data64.3.html">io_uring_sqe_set_data64(3)</A></B> <B>MUST</B> have been called before submitting the
+       request.
+
+
+
+</PRE>
+<H2>RETURN VALUE</H2><PRE>
+       <B><A HREF="io_uring_get_sqe.3.html">io_uring_get_sqe(3)</A></B> returns a pointer to the next submission queue event
+       on success and NULL on failure. If NULL is returned, the SQ ring is
+       currently full and entries must be submitted for processing before new
+       ones can get allocated.
+
+
+</PRE>
+<H2>SEE ALSO</H2><PRE>
+       <B><A HREF="io_uring_submit.3.html">io_uring_submit(3)</A></B>, <B><A HREF="io_uring_sqe_set_data.3.html">io_uring_sqe_set_data(3)</A></B>
+
+
+
+liburing-0.7                      July 10, 2020              <B><A HREF="io_uring_get_sqe.3.html">io_uring_get_sqe(3)</A></B>
+</PRE>
+<HR>
+<ADDRESS>
+Man(1) output converted with
+<a href="http://www.oac.uci.edu/indiv/ehood/man2html.html">man2html</a>
+</ADDRESS>
+</BODY>
+</HTML>

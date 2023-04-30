@@ -1,0 +1,57 @@
+<HTML>
+<BODY>
+<PRE>
+<!-- Manpage converted by man2html 3.0.1 -->
+
+
+</PRE>
+<H2>SYNOPSIS</H2><PRE>
+       <B>#include</B> <B>&lt;liburing.h&gt;</B>
+
+       <B>int</B> <B>io_uring_free_buf_ring(struct</B> <B>io_uring</B> <B>*</B><I>ring</I><B>,</B>
+                                  <B>struct</B> <B>io_uring_buf_ring</B> <B>*</B><I>br</I><B>,</B>
+                                  <B>unsigned</B> <B>int</B> <I>nentries</I><B>,</B>
+                                  <B>int</B> <I>bgid</I><B>);</B>
+
+
+</PRE>
+<H2>DESCRIPTION</H2><PRE>
+       The <B><A HREF="io_uring_free_buf_ring.3.html">io_uring_free_buf_ring(3)</A></B> function unregisters a previously
+       registered shared buffer ring. The ring must have heen previously
+       returned from <B><A HREF="io_uring_setup_buf_ring.3.html">io_uring_setup_buf_ring(3)</A></B><B>.</B>
+
+       The <I>ring</I> argument must pointer to the ring for which the provided buffer
+       ring is being registered, <I>br</I> must point to a buffer ring previously
+       returned by <B><A HREF="io_uring_setup_buf_ring.3.html">io_uring_setup_buf_ring(3)</A></B><B>,</B> <I>nentries</I> is the number of entries
+       requested in the buffer ring, and <I>bgid</I> is the buffer group ID that <I>br</I> was
+       setup with.
+
+       Under the covers, this function uses <B><A HREF="io_uring_unregister_buf_ring.3.html">io_uring_unregister_buf_ring(3)</A></B> to
+       unregister the ring, and handles the freeing of the ring rather than
+       letting the application open code it.
+
+       Available since 5.19.
+
+
+
+</PRE>
+<H2>RETURN VALUE</H2><PRE>
+       On success <B><A HREF="io_uring_register_free_ring.3.html">io_uring_register_free_ring(3)</A></B> returns a pointer to the buffe
+       ring. On failure it returns <B>-errno</B>.
+
+
+</PRE>
+<H2>SEE ALSO</H2><PRE>
+       <B><A HREF="io_uring_setup_buf_ring.3.html">io_uring_setup_buf_ring(3)</A></B>
+
+
+
+liburing-2.4                      March 7, 2023        <B><A HREF="io_uring_free_buf_ring.3.html">io_uring_free_buf_ring(3)</A></B>
+</PRE>
+<HR>
+<ADDRESS>
+Man(1) output converted with
+<a href="http://www.oac.uci.edu/indiv/ehood/man2html.html">man2html</a>
+</ADDRESS>
+</BODY>
+</HTML>

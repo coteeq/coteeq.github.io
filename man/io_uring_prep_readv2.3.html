@@ -1,0 +1,84 @@
+<HTML>
+<BODY>
+<PRE>
+<!-- Manpage converted by man2html 3.0.1 -->
+
+</PRE>
+<H2>SYNOPSIS</H2><PRE>
+       <B>#include</B> <B>&lt;sys/uio.h&gt;</B>
+       <B>#include</B> <B>&lt;liburing.h&gt;</B>
+
+       <B>void</B> <B>io_uring_prep_readv2(struct</B> <B>io_uring_sqe</B> <B>*</B><I>sqe</I><B>,</B>
+                                 <B>int</B> <I>fd</I><B>,</B>
+                                 <B>const</B> <B>struct</B> <B>iovec</B> <B>*</B><I>iovecs</I><B>,</B>
+                                 <B>unsigned</B> <I>nr</I><B>_</B><I>vecs</I><B>,</B>
+                                 <B>__u64</B> <I>offset</I><B>,</B>
+                                 <B>int</B> <I>flags</I><B>);</B>
+
+
+</PRE>
+<H2>DESCRIPTION</H2><PRE>
+       The <B><A HREF="io_uring_prep_readv2.3.html">io_uring_prep_readv2(3)</A></B> prepares a vectored IO read request. The
+       submission queue entry <I>sqe</I> is setup to use the file descriptor <I>fd</I> to
+       start reading <I>nr</I><B>_</B><I>vecs</I> into the <I>iovecs</I> array at the specified <I>offset</I>.  The
+       behavior of the function can be controlled with the <I>flags</I> parameter.
+
+       Supported values for <I>flags</I> are:
+
+       <B>RWF_HIPRI</B>
+              High priority request, poll if possible
+
+       <B>RWF_DSYNC</B>
+              per-IO O_DSYNC
+
+       <B>RWF_SYNC</B>
+              per-IO O_SYNC
+
+       <B>RWF_NOWAIT</B>
+              per-IO, return <B>-EAGAIN</B> if operation would block
+
+       <B>RWF_APPEND</B>
+              per-IO O_APPEND
+
+
+       On files that support seeking, if the offset is set to <B>-1</B>, the read
+       operation commences at the file offset, and the file offset is
+       incremented by the number of bytes read. See <B><A HREF="read.2.html">read(2)</A></B> for more details.
+       Note that for an async API, reading and updating the current file offset
+       may result in unpredictable behavior, unless access to the file is
+       serialized. It is not encouraged to use this feature, if it's possible to
+       provide the desired IO offset from the application or library.
+
+       On files that are not capable of seeking, the offset must be 0 or -1.
+
+       After the read has been prepared, it can be submitted with one of the
+       submit functions.
+
+
+
+</PRE>
+<H2>RETURN VALUE</H2><PRE>
+       None
+
+       state is stable. Very early kernels (5.4 and earlier) required state to
+       be stable until the completion occurred. Applications can test for this
+       behavior by inspecting the <B>IORING_FEAT_SUBMIT_STABLE</B> flag passed back
+       from <B><A HREF="io_uring_queue_init_params.3.html">io_uring_queue_init_params(3)</A></B>.
+
+
+</PRE>
+<H2>SEE ALSO</H2><PRE>
+       <B><A HREF="io_uring_get_sqe.3.html">io_uring_get_sqe(3)</A></B>, <B><A HREF="io_uring_prep_read.3.html">io_uring_prep_read(3)</A></B>, <B><A HREF="io_uring_prep_readv.3.html">io_uring_prep_readv(3)</A></B>,
+       <B><A HREF="io_uring_submit.3.html">io_uring_submit(3)</A></B>
+
+
+
+liburing-2.1                    November 15, 2021        <B><A HREF="io_uring_prep_readv2.3.html">io_uring_prep_readv2(3)</A></B>
+</PRE>
+<HR>
+<ADDRESS>
+Man(1) output converted with
+<a href="http://www.oac.uci.edu/indiv/ehood/man2html.html">man2html</a>
+</ADDRESS>
+</BODY>
+</HTML>

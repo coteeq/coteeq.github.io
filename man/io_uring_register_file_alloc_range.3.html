@@ -1,0 +1,58 @@
+<HTML>
+<BODY>
+<PRE>
+<!-- Manpage converted by man2html 3.0.1 -->
+
+</PRE>
+<H2>SYNOPSIS</H2><PRE>
+       <B>#include</B> <B>&lt;liburing.h&gt;</B>
+
+       <B>int</B> <B>io_uring_register_file_alloc_range(struct</B> <B>io_uring</B> <B>*</B><I>ring</I><B>,</B>
+                                              <B>unsigned</B> <I>off</I><B>,</B>
+                                              <B>unsigned</B> <I>len</I><B>);</B>
+
+
+</PRE>
+<H2>DESCRIPTION</H2><PRE>
+       The <B><A HREF="io_uring_register_file_alloc_range.3.html">io_uring_register_file_alloc_range(3)</A></B> function sets the allowable
+       range for fixed file index allocations within the kernel. When requests
+       that can instantiate a new fixed file are used with
+       <B>IORING_FILE_INDEX_ALLOC</B> <B>,</B> the application is asking the kernel to
+       allocate a new fixed file descriptor rather than pass in a specific value
+       for one. By default, the kernel will pick any available fixed file
+       descriptor within the range available. Calling this function with <I>off</I> set
+       to the starting offset and <I>len</I> set to the number of descriptors, the
+       application can limit the allocated descriptors to that particular range.
+       This effectively allows the application to set aside a range just for
+       dynamic allocations, with the remainder being used for specific values.
+
+       The application must have registered a fixed file table upfront, eg
+       through <B><A HREF="io_uring_register_files.3.html">io_uring_register_files(3)</A></B> or <B><A HREF="io_uring_register_files_sparse.3.html">io_uring_register_files_sparse(3)</A></B><B>.</B>
+
+       Available since 6.0.
+
+
+
+</PRE>
+<H2>RETURN VALUE</H2><PRE>
+       On success <B><A HREF="io_uring_register_buf_ring.3.html">io_uring_register_buf_ring(3)</A></B> returns 0. On failure it returns
+       <B>-errno</B>.
+
+
+</PRE>
+<H2>SEE ALSO</H2><PRE>
+       <B><A HREF="io_uring_register_files.3.html">io_uring_register_files(3)</A></B> <B><A HREF="io_uring_prep_accept_direct.3.html">io_uring_prep_accept_direct(3)</A></B>
+       <B><A HREF="io_uring_prep_openat_direct.3.html">io_uring_prep_openat_direct(3)</A></B> <B><A HREF="io_uring_prep_socket_direct.3.html">io_uring_prep_socket_direct(3)</A></B>
+
+
+
+liburing-2.3                    October 21, 2022
+                                           <B><A HREF="io_uring_register_file_alloc_range.3.html">io_uring_register_file_alloc_range(3)</A></B>
+</PRE>
+<HR>
+<ADDRESS>
+Man(1) output converted with
+<a href="http://www.oac.uci.edu/indiv/ehood/man2html.html">man2html</a>
+</ADDRESS>
+</BODY>
+</HTML>

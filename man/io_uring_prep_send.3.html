@@ -1,0 +1,74 @@
+<HTML>
+<BODY>
+<PRE>
+<!-- Manpage converted by man2html 3.0.1 -->
+
+</PRE>
+<H2>SYNOPSIS</H2><PRE>
+       <B>#include</B> <B>&lt;liburing.h&gt;</B>
+
+       <B>void</B> <B>io_uring_prep_send(struct</B> <B>io_uring_sqe</B> <B>*</B><I>sqe</I><B>,</B>
+                               <B>int</B> <I>sockfd</I><B>,</B>
+                               <B>const</B> <B>void</B> <B>*</B><I>buf</I><B>,</B>
+                               <B>size_t</B> <I>len</I><B>,</B>
+                               <B>int</B> <I>flags</I><B>);</B>
+
+       <B>void</B> <B>io_uring_prep_sendto(struct</B> <B>io_uring_sqe</B> <B>*</B><I>sqe</I><B>,</B>
+                                 <B>int</B> <I>sockfd</I><B>,</B>
+                                 <B>const</B> <B>void</B> <B>*</B><I>buf</I><B>,</B>
+                                 <B>size_t</B> <I>len</I><B>,</B>
+                                 <B>int</B> <I>flags</I><B>,</B>
+                                 <B>const</B> <B>struct</B> <B>sockaddr</B> <B>*</B><I>addr</I><B>,</B>
+                                 <B>socklen_t</B> <I>addrlen</I><B>);</B>
+
+
+</PRE>
+<H2>DESCRIPTION</H2><PRE>
+       The <B><A HREF="io_uring_prep_send.3.html">io_uring_prep_send(3)</A></B> function prepares a send request. The
+       submission queue entry <I>sqe</I> is setup to use the file descriptor <I>sockfd</I> to
+       start sending the data from <I>buf</I> of size <I>len</I> bytes and with modifier flags
+       <I>flags</I>.
+
+       Note that using <B>IOSQE_IO_LINK</B> with this request type requires the setting
+       of <B>MSG_WAITALL</B> in the <I>flags</I> argument, as a short send isn't a considered
+       an error condition without that being set.
+
+       This function prepares an async <B><A HREF="send.2.html">send(2)</A></B> request. See that man page for
+       details.
+
+       The <B><A HREF="io_uring_prep_sendto.3.html">io_uring_prep_sendto(3)</A></B> function prepares a sendto request. The
+       submission queue entry <I>sqe</I> is setup to use the file descriptor <I>sockfd</I> to
+       start sending the data from <I>buf</I> of size <I>len</I> bytes and with modifier flags
+       <I>flags</I>.  The destination address is specified by <I>addr</I> and <I>addrlen</I> and must
+       be a valid address for the socket type.
+
+       This function prepares an async <B><A HREF="sendto.2.html">sendto(2)</A></B> request. See that man page for
+       details.
+
+
+
+</PRE>
+<H2>RETURN VALUE</H2><PRE>
+       None
+
+
+</PRE>
+<H2>ERRORS</H2><PRE>
+       The CQE <I>res</I> field will contain the result of the operation. See the
+       related man page for details on possible values. Note that where
+       synchronous system calls will return <B>-1</B> on failure and set <I>errno</I> to the
+       actual error value, io_uring never uses <I>errno</I>.  Instead it returns the
+       negated <I>errno</I> directly in the CQE <I>res</I> field.
+
+
+</PRE>
+<H2>SEE ALSO</H2><PRE>
+       <B><A HREF="io_uring_get_sqe.3.html">io_uring_get_sqe(3)</A></B>, <B><A HREF="io_uring_submit.3.html">io_uring_submit(3)</A></B>, <B><A HREF="send.2.html">send(2)</A></B> <B><A HREF="sendto.2.html">sendto(2)</A></B>
+</PRE>
+<HR>
+<ADDRESS>
+Man(1) output converted with
+<a href="http://www.oac.uci.edu/indiv/ehood/man2html.html">man2html</a>
+</ADDRESS>
+</BODY>
+</HTML>

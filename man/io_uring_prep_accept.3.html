@@ -1,0 +1,128 @@
+<HTML>
+<BODY>
+<PRE>
+<!-- Manpage converted by man2html 3.0.1 -->
+
+</PRE>
+<H2>SYNOPSIS</H2><PRE>
+       <B>#include</B> <B>&lt;sys/socket.h&gt;</B>
+       <B>#include</B> <B>&lt;liburing.h&gt;</B>
+
+       <B>void</B> <B>io_uring_prep_accept(struct</B> <B>io_uring_sqe</B> <B>*</B><I>sqe</I><B>,</B>
+                                 <B>int</B> <I>sockfd</I><B>,</B>
+                                 <B>struct</B> <B>sockaddr</B> <B>*</B><I>addr</I><B>,</B>
+                                 <B>socklen_t</B> <B>*</B><I>addrlen</I><B>,</B>
+                                 <B>int</B> <I>flags</I><B>);</B>
+
+       <B>void</B> <B>io_uring_prep_accept_direct(struct</B> <B>io_uring_sqe</B> <B>*</B><I>sqe</I><B>,</B>
+                                        <B>int</B> <I>sockfd</I><B>,</B>
+                                        <B>struct</B> <B>sockaddr</B> <B>*</B><I>addr</I><B>,</B>
+                                        <B>socklen_t</B> <B>*</B><I>addrlen</I><B>,</B>
+                                        <B>int</B> <I>flags</I><B>,</B>
+                                        <B>unsigned</B> <B>int</B> <I>file</I><B>_</B><I>index</I><B>);</B>
+
+       <B>void</B> <B>io_uring_prep_multishot_accept(struct</B> <B>io_uring_sqe</B> <B>*</B><I>sqe</I><B>,</B>
+                                           <B>int</B> <I>sockfd</I><B>,</B>
+                                           <B>struct</B> <B>sockaddr</B> <B>*</B><I>addr</I><B>,</B>
+                                           <B>socklen_t</B> <B>*</B><I>addrlen</I><B>,</B>
+                                           <B>int</B> <I>flags</I><B>);</B>
+
+       <B>void</B> <B>io_uring_prep_multishot_accept_direct(struct</B> <B>io_uring_sqe</B> <B>*</B><I>sqe</I><B>,</B>
+                                                  <B>int</B> <I>sockfd</I><B>,</B>
+                                                  <B>struct</B> <B>sockaddr</B> <B>*</B><I>addr</I><B>,</B>
+                                                  <B>socklen_t</B> <B>*</B><I>addrlen</I><B>,</B>
+                                                  <B>int</B> <I>flags</I><B>);</B>
+
+
+</PRE>
+<H2>DESCRIPTION</H2><PRE>
+       The <B><A HREF="io_uring_prep_accept.3.html">io_uring_prep_accept(3)</A></B> function and its three variants prepare an
+       accept request similar to <B><A HREF="accept4.2.html">accept4(2)</A></B>.  The submission queue entry <I>sqe</I> is
+       setup to use the file descriptor <I>sockfd</I> to start accepting a connection
+       request described by the socket address at <I>addr</I> and of structure length
+       <I>addrlen</I> and using modifier flags in <I>flags</I>.
+
+       The three variants allow combining the direct file table and multishot
+       features.
+
+       Direct descriptors are io_uring private file descriptors. They avoid some
+       of the overhead associated with thread shared file tables and can be used
+       in any io_uring request that takes a file descriptor.  The two direct
+       variants here create such direct descriptors.  Subsequent to their
+       creation, they can be used by setting <B>IOSQE_FIXED_FILE</B> in the SQE <I>flags</I>
+       member, and setting the SQE <I>fd</I> field to the direct descriptor value
+       rather than the regular file descriptor. Direct descriptors are managed
+       like registered files.
+
+       To use an accept direct variant, the application must first have
+       registered a file table of a desired size using
+       <B><A HREF="io_uring_register_files.3.html">io_uring_register_files(3)</A></B> or <B><A HREF="io_uring_register_files_sparse.3.html">io_uring_register_files_sparse(3)</A></B>.  Once
+       registered, <B><A HREF="io_uring_prep_accept_direct.3.html">io_uring_prep_accept_direct(3)</A></B> allows an entry in that table
+       applications cannot rely on a <B>-EINVAL</B> CQE <I>res</I> being returned when the
+       kernel is too old because older kernels may not recognize they are being
+       asked to use a direct table slot.
+
+       When a direct descriptor accept request asks for a table slot to be
+       dynamically chosen but there are no free entries, <B>-ENFILE</B> is returned as
+       the CQE <I>res</I>.
+
+       The multishot variants allow an application to issue a single accept
+       request, which will repeatedly trigger a CQE when a connection request
+       comes in. Like other multishot type requests, the application should look
+       at the CQE <I>flags</I> and see if <B>IORING_CQE_F_MORE</B> is set on completion as an
+       indication of whether or not the accept request will generate further
+       CQEs. Note that for the multishot variants, setting <B>addr</B> and <B>addrlen</B> may
+       not make a lot of sense, as the same value would be used for every
+       accepted connection. This means that the data written to <B>addr</B> may be
+       overwritten by a new connection before the application has had time to
+       process a past connection. If the application knows that a new connection
+       cannot come in before a previous one has been processed, it may be used
+       as expected. The multishot variants are available since 5.19.
+
+       See the man page <B><A HREF="accept4.2.html">accept4(2)</A></B> for details of the accept function itself.
+
+
+
+</PRE>
+<H2>RETURN VALUE</H2><PRE>
+       None
+
+
+</PRE>
+<H2>ERRORS</H2><PRE>
+       The CQE <I>res</I> field will contain the result of the operation.
+
+       <B><A HREF="io_uring_prep_accept.3.html">io_uring_prep_accept(3)</A></B> generates the installed file descriptor as its
+       result.
+
+       <B><A HREF="io_uring_prep_accept_direct.3.html">io_uring_prep_accept_direct(3)</A></B> and <I>file</I><B>_</B><I>index</I> set to a specific direct
+       descriptor generates <B>0</B> on success.  The caller must remember which direct
+       descriptor was picked for this request.
+
+       <B><A HREF="io_uring_prep_accept_direct.3.html">io_uring_prep_accept_direct(3)</A></B> and <I>file</I><B>_</B><I>index</I> set to
+       <B>IORING_FILE_INDEX_ALLOC</B> generates the dynamically chosen direct
+       descriptor.
+
+       <B><A HREF="io_uring_prep_multishot_accept.3.html">io_uring_prep_multishot_accept(3)</A></B> generates the installed file descriptor
+       in each result.
+
+       <B><A HREF="io_uring_prep_multishot_accept_direct.3.html">io_uring_prep_multishot_accept_direct(3)</A></B>, generates the dynamically
+       chosen direct descriptor in each result.
+
+       Note that where synchronous system calls will return <B>-1</B> on failure and
+       set <I>errno</I> to the actual error value, io_uring never uses <I>errno</I>.  Instead
+       it generates the negated <I>errno</I> directly in the CQE <I>res</I> field.
+
+
+</PRE>
+<H2>NOTES</H2><PRE>
+
+liburing-2.2                     March 13, 2022          <B><A HREF="io_uring_prep_accept.3.html">io_uring_prep_accept(3)</A></B>
+</PRE>
+<HR>
+<ADDRESS>
+Man(1) output converted with
+<a href="http://www.oac.uci.edu/indiv/ehood/man2html.html">man2html</a>
+</ADDRESS>
+</BODY>
+</HTML>

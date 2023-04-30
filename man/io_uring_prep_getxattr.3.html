@@ -1,0 +1,60 @@
+<HTML>
+<BODY>
+<PRE>
+<!-- Manpage converted by man2html 3.0.1 -->
+
+
+</PRE>
+<H2>SYNOPSIS</H2><PRE>
+       <B>#include</B> <B>&lt;liburing.h&gt;</B>
+
+       <B>void</B> <B>io_uring_prep_getxattr(struct</B> <B>io_uring_sqe</B> <B>*</B><I>sqe</I><B>,</B>
+                                   <B>const</B> <B>char</B> <B>*</B><I>name</I><B>,</B>
+                                   <B>char</B> <B>*</B><I>value</I><B>,</B>
+                                   <B>const</B> <B>char</B> <B>*</B><I>path</I><B>,</B>
+                                   <B>unsigned</B> <B>int</B> <I>len</I><B>);</B>
+
+       <B>void</B> <B>io_uring_prep_fgetxattr(struct</B> <B>io_uring_sqe</B> <B>*</B><I>sqe</I><B>,</B>
+                                    <B>int</B> <I>fd</I><B>,</B>
+                                    <B>const</B> <B>char</B> <B>*</B><I>name</I><B>,</B>
+                                    <B>char</B> <B>*</B><I>value</I><B>,</B>
+                                    <B>unsigned</B> <B>int</B> <I>len</I><B>);</B>
+
+
+</PRE>
+<H2>DESCRIPTION</H2><PRE>
+       The <B><A HREF="io_uring_prep_getxattr.3.html">io_uring_prep_getxattr(3)</A></B> function prepares a request to get an
+       extended attribute value. The submission queue entry <I>sqe</I> is setup to get
+       the <I>value</I> of the extended attribute identified by <I>name</I> and associated
+       with the given <I>path</I> in the filesystem.  The <I>len</I> argument specifies the
+       size (in bytes) of <I>value</I>.
+
+       <B><A HREF="io_uring_prep_fgetxattr.3.html">io_uring_prep_fgetxattr(3)</A></B> is identical to <B><A HREF="io_uring_prep_getxattr.3.html">io_uring_prep_getxattr(3)</A></B>,
+       only the open file referred to by <I>fd</I> is interrogated in place of <I>path</I>.
+
+       This function prepares an async <B><A HREF="getxattr.2.html">getxattr(2)</A></B> request. See that man page
+       for details.
+
+
+
+</PRE>
+<H2>RETURN VALUE</H2><PRE>
+       None
+
+
+
+</PRE>
+<H2>SEE ALSO</H2><PRE>
+       <B><A HREF="io_uring_get_sqe.3.html">io_uring_get_sqe(3)</A></B>, <B><A HREF="getxattr.2.html">getxattr(2)</A></B>
+
+
+
+liburing-2.4                    January 23, 2023       <B><A HREF="io_uring_prep_getxattr.3.html">io_uring_prep_getxattr(3)</A></B>
+</PRE>
+<HR>
+<ADDRESS>
+Man(1) output converted with
+<a href="http://www.oac.uci.edu/indiv/ehood/man2html.html">man2html</a>
+</ADDRESS>
+</BODY>
+</HTML>

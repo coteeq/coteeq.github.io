@@ -1,0 +1,79 @@
+<HTML>
+<BODY>
+<PRE>
+<!-- Manpage converted by man2html 3.0.1 -->
+
+</PRE>
+<H2>SYNOPSIS</H2><PRE>
+       <B>#include</B> <B>&lt;liburing.h&gt;</B>
+
+       <B>int</B> <B>io_uring_register_files(struct</B> <B>io_uring</B> <B>*</B><I>ring</I><B>,</B>
+                                   <B>const</B> <B>int</B> <B>*</B><I>files</I><B>,</B>
+                                   <B>unsigned</B> <I>nr</I><B>_</B><I>files</I><B>);</B>
+
+       <B>int</B> <B>io_uring_register_files_tags(struct</B> <B>io_uring</B> <B>*</B><I>ring</I><B>,</B>
+                                        <B>const</B> <B>int</B> <B>*</B><I>files</I><B>,</B>
+                                        <B>const</B> <B>__u64</B> <B>*</B><I>tags</I><B>,</B>
+                                        <B>unsigned</B> <I>nr</I><B>);</B>
+
+       <B>int</B> <B>io_uring_register_files_sparse(struct</B> <B>io_uring</B> <B>*</B><I>ring</I><B>,</B>
+                                          <B>unsigned</B> <I>nr</I><B>_</B><I>files</I><B>);</B>
+
+       <B>int</B> <B>io_uring_register_files_update(struct</B> <B>io_uring</B> <B>*</B><I>ring</I><B>,</B>
+                                          <B>unsigned</B> <I>off</I><B>,</B>
+                                          <B>const</B> <B>int</B> <B>*</B><I>files</I><B>,</B>
+                                          <B>unsigned</B> <I>nr</I><B>_</B><I>files</I><B>);</B>
+
+       <B>int</B> <B>io_uring_register_files_update_tag(struct</B> <B>io_uring</B> <B>*</B><I>ring</I><B>,</B>
+                                          <B>unsigned</B> <I>off</I><B>,</B>
+                                          <B>const</B> <B>int</B> <B>*</B><I>files</I><B>,</B>
+                                          <B>const</B> <B>__u64</B> <B>*</B><I>tags</I><B>,</B>
+                                          <B>unsigned</B> <I>nr</I><B>_</B><I>files</I><B>);</B>
+
+
+</PRE>
+<H2>DESCRIPTION</H2><PRE>
+       The <B><A HREF="io_uring_register_files.3.html">io_uring_register_files(3)</A></B> function registers <I>nr</I><B>_</B><I>files</I> number of file
+       descriptors defined by the array <I>files</I> belonging to the <I>ring</I> for
+       subsequent operations.
+
+       The <B><A HREF="io_uring_register_files_tags.3.html">io_uring_register_files_tags(3)</A></B> function behaves the same as
+       <B><A HREF="io_uring_register_files.3.html">io_uring_register_files(3)</A></B> function but additionally takes <I>tags</I>
+       parameter. See <B>IORING_REGISTER_BUFFERS2</B> for the resource tagging
+       description.
+
+       The <B><A HREF="io_uring_register_files_sparse.3.html">io_uring_register_files_sparse(3)</A></B> function registers an empty file
+       table of <I>nr</I><B>_</B><I>files</I> number of file descriptors. These files must be updated
+       before use, using eg <B><A HREF="io_uring_register_files_update_tag.3.html">io_uring_register_files_update_tag(3)</A></B>.  The sparse
+       variant is available in kernels 5.19 and later.
+
+       Registering a file table is a prerequisite for using any request that
+       uses direct descriptors.
+
+       Registered files have less overhead per operation than normal files. This
+       is due to the kernel grabbing a reference count on a file when an
+       operation begins, and dropping it when it's done. When the process file
+       table is shared, for example if the process has ever created any threads,
+       then this cost goes up even more. Using registered files reduces the
+       overhead of file reference management across requests that operate on a
+       file.
+
+       <B><A HREF="io_uring_register_files_update_tag.3.html">io_uring_register_files_update_tag(3)</A></B> return number of files updated.  On
+       failure they return <B>-errno</B>.
+
+
+</PRE>
+<H2>SEE ALSO</H2><PRE>
+       <B><A HREF="io_uring_register.2.html">io_uring_register(2)</A></B>, <B><A HREF="io_uring_get_sqe.3.html">io_uring_get_sqe(3)</A></B>, <B><A HREF="io_uring_unregister_files.3.html">io_uring_unregister_files(3)</A></B>
+
+
+
+liburing-2.1                    November 15, 2021     <B><A HREF="io_uring_register_files.3.html">io_uring_register_files(3)</A></B>
+</PRE>
+<HR>
+<ADDRESS>
+Man(1) output converted with
+<a href="http://www.oac.uci.edu/indiv/ehood/man2html.html">man2html</a>
+</ADDRESS>
+</BODY>
+</HTML>

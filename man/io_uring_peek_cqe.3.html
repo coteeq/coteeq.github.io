@@ -1,0 +1,45 @@
+<HTML>
+<BODY>
+<PRE>
+<!-- Manpage converted by man2html 3.0.1 -->
+
+</PRE>
+<H2>SYNOPSIS</H2><PRE>
+       <B>#include</B> <B>&lt;liburing.h&gt;</B>
+
+       <B>int</B> <B>io_uring_peek_cqe(struct</B> <B>io_uring</B> <B>*</B><I>ring</I><B>,</B>
+                             <B>struct</B> <B>io_uring_cqe</B> <B>**</B><I>cqe</I><B>_</B><I>ptr</I><B>);</B>
+
+
+</PRE>
+<H2>DESCRIPTION</H2><PRE>
+       The <B><A HREF="io_uring_peek_cqe.3.html">io_uring_peek_cqe(3)</A></B> function returns an IO completion from the queue
+       belonging to the <I>ring</I> param, if one is readily available. On successful
+       return, <I>cqe</I><B>_</B><I>ptr</I> param is filled with a valid CQE entry.
+
+       This function does not enter the kernel to wait for an event, an event is
+       only returned if it's already available in the CQ ring.
+
+
+
+</PRE>
+<H2>RETURN VALUE</H2><PRE>
+       On success <B><A HREF="io_uring_peek_cqe.3.html">io_uring_peek_cqe(3)</A></B> returns <B>0</B> and the cqe_ptr parameter is
+       filled in. On failure it returns <B>-EAGAIN</B>.
+
+
+</PRE>
+<H2>SEE ALSO</H2><PRE>
+       <B><A HREF="io_uring_submit.3.html">io_uring_submit(3)</A></B>, <B><A HREF="io_uring_wait_cqes.3.html">io_uring_wait_cqes(3)</A></B>, <B><A HREF="io_uring_wait_cqe.3.html">io_uring_wait_cqe(3)</A></B>
+
+
+
+liburing-2.2                     March 12, 2022             <B><A HREF="io_uring_peek_cqe.3.html">io_uring_peek_cqe(3)</A></B>
+</PRE>
+<HR>
+<ADDRESS>
+Man(1) output converted with
+<a href="http://www.oac.uci.edu/indiv/ehood/man2html.html">man2html</a>
+</ADDRESS>
+</BODY>
+</HTML>

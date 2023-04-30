@@ -1,0 +1,74 @@
+<HTML>
+<BODY>
+<PRE>
+<!-- Manpage converted by man2html 3.0.1 -->
+
+</PRE>
+<H2>SYNOPSIS</H2><PRE>
+       <B>#include</B> <B>&lt;liburing.h&gt;</B>
+
+       <B>void</B> <B>io_uring_prep_send_zc(struct</B> <B>io_uring_sqe</B> <B>*</B><I>sqe</I><B>,</B>
+                                  <B>int</B> <I>sockfd</I><B>,</B>
+                                  <B>const</B> <B>void</B> <B>*</B><I>buf</I><B>,</B>
+                                  <B>size_t</B> <I>len</I><B>,</B>
+                                  <B>int</B> <I>flags</I><B>,</B>
+                                  <B>unsigned</B> <I>zc</I><B>_</B><I>flags</I><B>);</B>
+
+       <B>void</B> <B>io_uring_prep_send_zc_fixed(struct</B> <B>io_uring_sqe</B> <B>*</B><I>sqe</I><B>,</B>
+                                        <B>int</B> <I>sockfd</I><B>,</B>
+                                        <B>const</B> <B>void</B> <B>*</B><I>buf</I><B>,</B>
+                                        <B>size_t</B> <I>len</I><B>,</B>
+                                        <B>int</B> <I>flags</I><B>,</B>
+                                        <B>unsigned</B> <I>zc</I><B>_</B><I>flags</I><B>);</B>
+                                        <B>unsigned</B> <I>buf</I><B>_</B><I>index</I><B>);</B>
+
+
+</PRE>
+<H2>DESCRIPTION</H2><PRE>
+       The <B><A HREF="io_uring_prep_send_zc.3.html">io_uring_prep_send_zc(3)</A></B> function prepares a zerocopy send request.
+       The submission queue entry <I>sqe</I> is setup to use the file descriptor <I>sockfd</I>
+       to start sending the data from <I>buf</I> of size <I>len</I> bytes with send modifier
+       flags <I>flags</I> and zerocopy modifier flags <I>zc</I><B>_</B><I>flags</I>.
+
+       The <B><A HREF="io_uring_prep_send_zc_fixed.3.html">io_uring_prep_send_zc_fixed(3)</A></B> works just like
+       <B><A HREF="io_uring_prep_send_zc.3.html">io_uring_prep_send_zc(3)</A></B> except it requires the use of buffers that have
+       been registered with <B><A HREF="io_uring_register_buffers.3.html">io_uring_register_buffers(3)</A></B>.  The <I>buf</I> and <I>len</I>
+       arguments must fall within a region specified by <I>buf</I><B>_</B><I>index</I> in the
+       previously registered buffer. The buffer need not be aligned with the
+       start of the registered buffer.
+
+       Note that using <B>IOSQE_IO_LINK</B> with this request type requires the setting
+       of <B>MSG_WAITALL</B> in the <I>flags</I> argument, as a short send isn't considered an
+       error condition without that being set.
+
+       These functions prepare an async zerocopy <B><A HREF="send.2.html">send(2)</A></B> request. See that man
+       page for details. For details on the zerocopy nature of it, see
+       <B><A HREF="io_uring_enter.2.html">io_uring_enter(2)</A></B><B>.</B>
+
+
+
+</PRE>
+<H2>RETURN VALUE</H2><PRE>
+       None
+
+
+</PRE>
+<H2>ERRORS</H2><PRE>
+       The CQE <I>res</I> field will contain the result of the operation. See the
+       related man page for details on possible values. Note that where
+       synchronous system calls will return <B>-1</B> on failure and set <I>errno</I> to the
+       actual error value, io_uring never uses <I>errno</I>.  Instead it returns the
+       negated <I>errno</I> directly in the CQE <I>res</I> field.
+
+
+</PRE>
+<H2>SEE ALSO</H2><PRE>
+       <B><A HREF="io_uring_get_sqe.3.html">io_uring_get_sqe(3)</A></B>, <B><A HREF="io_uring_submit.3.html">io_uring_submit(3)</A></B>, <B><A HREF="io_uring_prep_send.3.html">io_uring_prep_send(3)</A></B>,
+</PRE>
+<HR>
+<ADDRESS>
+Man(1) output converted with
+<a href="http://www.oac.uci.edu/indiv/ehood/man2html.html">man2html</a>
+</ADDRESS>
+</BODY>
+</HTML>

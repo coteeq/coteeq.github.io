@@ -1,0 +1,88 @@
+<HTML>
+<BODY>
+<PRE>
+<!-- Manpage converted by man2html 3.0.1 -->
+
+</PRE>
+<H2>SYNOPSIS</H2><PRE>
+       <B>#include</B> <B>&lt;liburing.h&gt;</B>
+
+       <B>void</B> <B>io_uring_prep_timeout(struct</B> <B>io_uring_sqe</B> <B>*</B><I>sqe</I><B>,</B>
+                                  <B>struct</B> <B>__kernel_timespec</B> <B>*</B><I>ts</I><B>,</B>
+                                  <B>unsigned</B> <I>count</I><B>,</B>
+                                  <B>unsigned</B> <I>flags</I><B>);</B>
+
+
+</PRE>
+<H2>DESCRIPTION</H2><PRE>
+       The <B><A HREF="io_uring_prep_timeout.3.html">io_uring_prep_timeout(3)</A></B> function prepares a timeout request. The
+       submission queue entry <I>sqe</I> is setup to arm a timeout specified by <I>ts</I> and
+       with a timeout count of <I>count</I> completion entries. The <I>flags</I> argument
+       holds modifier flags for the request.
+
+       This request type can be used as a timeout waking anyone sleeping for
+       events on the CQ ring. The <I>flags</I> argument may contain:
+
+       <B>IORING_TIMEOUT_ABS</B>
+              The value specified in <I>ts</I> is an absolute value rather than a
+              relative one.
+
+       <B>IORING_TIMEOUT_BOOTTIME</B>
+              The boottime clock source should be used.
+
+       <B>IORING_TIMEOUT_REALTIME</B>
+              The realtime clock source should be used.
+
+       <B>IORING_TIMEOUT_ETIME_SUCCESS</B>
+              Consider an expired timeout a success in terms of the posted
+              completion.  Normally a timeout that triggers would return in a
+              <B>-ETIME</B> CQE <I>res</I> value.
+
+       <B>IORING_TIMEOUT_MULTISHOT</B>
+              The request will return multiple timeout completions. The
+              completion flag IORING_CQE_F_MORE is set if more timeouts are
+              expected. The value specified in <I>count</I> is the number of repeats. A
+              value of 0 means the timeout is indefinite and can only be stopped
+              by a removal request.
+
+       The timeout completion event will trigger if either the specified timeout
+       has occurred, or the specified number of events to wait for have been
+       posted to the CQ ring.
+
+
+
+</PRE>
+<H2>RETURN VALUE</H2><PRE>
+       None
+
+
+</PRE>
+<H2>ERRORS</H2><PRE>
+       These are the errors that are reported in the CQE <I>res</I> field. On success,
+       <B>0</B> is returned.
+
+       <B>-ETIME</B> The specified timeout occurred and triggered the completion event.
+       remain valid until the request has been successfully submitted. It need
+       not remain valid until completion. Once a request has been submitted, the
+       in-kernel state is stable. Very early kernels (5.4 and earlier) required
+       state to be stable until the completion occurred. Applications can test
+       for this behavior by inspecting the <B>IORING_FEAT_SUBMIT_STABLE</B> flag passed
+       back from <B><A HREF="io_uring_queue_init_params.3.html">io_uring_queue_init_params(3)</A></B>.
+
+
+</PRE>
+<H2>SEE ALSO</H2><PRE>
+       <B><A HREF="io_uring_get_sqe.3.html">io_uring_get_sqe(3)</A></B>, <B><A HREF="io_uring_submit.3.html">io_uring_submit(3)</A></B>, <B><A HREF="io_uring_prep_timeout_remove.3.html">io_uring_prep_timeout_remove(3)</A></B>,
+       <B><A HREF="io_uring_prep_timeout_update.3.html">io_uring_prep_timeout_update(3)</A></B>
+
+
+
+liburing-2.2                     March 12, 2022    <B><A HREF="io_uring_prep_poll_timeout.3.html">io_uring_prep_poll_timeout(3)</A></B>
+</PRE>
+<HR>
+<ADDRESS>
+Man(1) output converted with
+<a href="http://www.oac.uci.edu/indiv/ehood/man2html.html">man2html</a>
+</ADDRESS>
+</BODY>
+</HTML>

@@ -1,0 +1,74 @@
+<HTML>
+<BODY>
+<PRE>
+<!-- Manpage converted by man2html 3.0.1 -->
+
+</PRE>
+<H2>SYNOPSIS</H2><PRE>
+       <B>#include</B> <B>&lt;liburing.h&gt;</B>
+
+       <B>void</B> <B>io_uring_prep_files_update(struct</B> <B>io_uring_sqe</B> <B>*</B><I>sqe</I><B>,</B>
+                                       <B>int</B> <B>*</B><I>fds</I><B>,</B>
+                                       <B>unsigned</B> <I>nr</I><B>_</B><I>fds</I><B>,</B>
+                                       <B>int</B> <I>offset</I><B>);</B>
+
+
+</PRE>
+<H2>DESCRIPTION</H2><PRE>
+       The <B><A HREF="io_uring_prep_files_update.3.html">io_uring_prep_files_update(3)</A></B> function prepares a request for
+       updating a number of previously registered file descriptors. The
+       submission queue entry <I>sqe</I> is setup to use the file descriptor array
+       pointed to by <I>fds</I> and of <I>nr</I><B>_</B><I>fds</I> in length to update that amount of
+       previously registered files starting at offset <I>offset</I>.
+
+       Once a previously registered file is updated with a new one, the existing
+       entry is updated and then removed from the table. This operation is
+       equivalent to first unregistering that entry and then inserting a new
+       one, just bundled into one combined operation.
+
+       If <I>offset</I> is specified as IORING_FILE_INDEX_ALLOC, io_uring will allocate
+       free direct descriptors instead of having the application to pass, and
+       store allocated direct descriptors into <I>fds</I> array, <I>cqe-&gt;res</I> will return
+       the number of direct descriptors allocated.
+
+
+
+</PRE>
+<H2>RETURN VALUE</H2><PRE>
+       None
+
+
+</PRE>
+<H2>ERRORS</H2><PRE>
+       These are the errors that are reported in the CQE <I>res</I> field. On success,
+       <I>res</I> will contain the number of successfully updated file descriptors. On
+       error, the following errors can occur.
+
+       <B>-ENOMEM</B>
+              The kernel was unable to allocate memory for the request.
+
+       <B>-EINVAL</B>
+              One of the fields set in the SQE was invalid.
+
+       <B>-EFAULT</B>
+              The kernel was unable to copy in the memory pointed to by <I>fds</I>.
+
+       <B>-EBADF</B> On of the descriptors located in <I>fds</I> didn't refer to a valid file
+              descriptor, or one of the file descriptors in the array referred
+              to an io_uring instance.
+
+       <B>-EOVERFLOW</B>
+              The product of <I>offset</I> and <I>nr</I><B>_</B><I>fds</I> exceed the valid amount or
+              overflowed.
+
+
+</PRE>
+<H2>NOTES</H2><PRE>
+</PRE>
+<HR>
+<ADDRESS>
+Man(1) output converted with
+<a href="http://www.oac.uci.edu/indiv/ehood/man2html.html">man2html</a>
+</ADDRESS>
+</BODY>
+</HTML>

@@ -1,0 +1,50 @@
+<HTML>
+<BODY>
+<PRE>
+<!-- Manpage converted by man2html 3.0.1 -->
+
+</PRE>
+<H2>SYNOPSIS</H2><PRE>
+       <B>#include</B> <B>&lt;liburing.h&gt;</B>
+
+       <B>int</B> <B>io_uring_wait_cqe_nr(struct</B> <B>io_uring</B> <B>*</B><I>ring</I><B>,</B>
+                                <B>struct</B> <B>io_uring_cqe</B> <B>**</B><I>cqe</I><B>_</B><I>ptr</I><B>,</B>
+                                <B>unsigned</B> <I>wait</I><B>_</B><I>nr</I><B>);</B>
+
+
+</PRE>
+<H2>DESCRIPTION</H2><PRE>
+       The <B><A HREF="io_uring_wait_cqe_nr.3.html">io_uring_wait_cqe_nr(3)</A></B> function returns <I>wait</I><B>_</B><I>nr</I> IO completion events
+       from the queue belonging to the <I>ring</I> param, waiting for it if necessary.
+       If the requested number of events are already available in the ring when
+       invoked, no waiting will occur. The <I>cqe</I><B>_</B><I>ptr</I> param is filled in on
+       success.
+
+       After the caller has submitted a request with <B><A HREF="io_uring_submit.3.html">io_uring_submit(3)</A></B>, the
+       application can retrieve the completion with <B><A HREF="io_uring_wait_cqe.3.html">io_uring_wait_cqe(3)</A></B>.
+
+
+
+</PRE>
+<H2>RETURN VALUE</H2><PRE>
+       On success <B><A HREF="io_uring_wait_cqe_nr.3.html">io_uring_wait_cqe_nr(3)</A></B> returns 0 and the cqe_ptr param is
+       filled in. On failure it returns <B>-errno</B>.  The return value indicates the
+       result of waiting for a CQE, and it has no relation to the CQE result
+       itself.
+
+
+</PRE>
+<H2>SEE ALSO</H2><PRE>
+       <B><A HREF="io_uring_submit.3.html">io_uring_submit(3)</A></B>, <B><A HREF="io_uring_wait_cqes.3.html">io_uring_wait_cqes(3)</A></B>
+
+
+
+liburing-2.1                    November 15, 2021        <B><A HREF="io_uring_wait_cqe_nr.3.html">io_uring_wait_cqe_nr(3)</A></B>
+</PRE>
+<HR>
+<ADDRESS>
+Man(1) output converted with
+<a href="http://www.oac.uci.edu/indiv/ehood/man2html.html">man2html</a>
+</ADDRESS>
+</BODY>
+</HTML>

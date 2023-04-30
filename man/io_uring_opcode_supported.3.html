@@ -1,0 +1,42 @@
+<HTML>
+<BODY>
+<PRE>
+<!-- Manpage converted by man2html 3.0.1 -->
+
+</PRE>
+<H2>SYNOPSIS</H2><PRE>
+       <B>#include</B> <B>&lt;liburing.h&gt;</B>
+
+       <B>int</B> <B>io_uring_opcode_supported(struct</B> <B>io_uring_probe</B> <B>*</B><I>probe</I><B>,</B>
+                                     <B>int</B> <I>opcode</I><B>);</B>
+
+
+</PRE>
+<H2>DESCRIPTION</H2><PRE>
+       The function <B><A HREF="io_uring_opcode_supported.3.html">io_uring_opcode_supported(3)</A></B> allows the caller to determine
+       if the passed in <I>opcode</I> belonging to the <I>probe</I> param is supported. An
+       instance of the io_uring_probe instance can be obtained by calling the
+       function <B><A HREF="io_uring_get_probe.3.html">io_uring_get_probe(3)</A></B>.
+
+
+
+</PRE>
+<H2>RETURN VALUE</H2><PRE>
+       On success it returns 1, otherwise it returns 0.
+
+
+</PRE>
+<H2>SEE ALSO</H2><PRE>
+       <B><A HREF="io_uring_get_probe.3.html">io_uring_get_probe(3)</A></B>
+
+
+
+liburing-2.1                    January 25, 2022    <B><A HREF="io_uring_opcode_supported.3.html">io_uring_opcode_supported(3)</A></B>
+</PRE>
+<HR>
+<ADDRESS>
+Man(1) output converted with
+<a href="http://www.oac.uci.edu/indiv/ehood/man2html.html">man2html</a>
+</ADDRESS>
+</BODY>
+</HTML>

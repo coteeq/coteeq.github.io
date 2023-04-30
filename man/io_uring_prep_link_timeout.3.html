@@ -1,0 +1,81 @@
+<HTML>
+<BODY>
+<PRE>
+<!-- Manpage converted by man2html 3.0.1 -->
+
+</PRE>
+<H2>SYNOPSIS</H2><PRE>
+       <B>#include</B> <B>&lt;liburing.h&gt;</B>
+
+       <B>void</B> <B>io_uring_prep_link_timeout(struct</B> <B>io_uring_sqe</B> <B>*</B><I>sqe</I><B>,</B>
+                                       <B>struct</B> <B>__kernel_timespec</B> <B>*</B><I>ts</I><B>,</B>
+                                       <B>unsigned</B> <I>flags</I><B>);</B>
+
+
+</PRE>
+<H2>DESCRIPTION</H2><PRE>
+       The <B><A HREF="io_uring_prep_link_timeout.3.html">io_uring_prep_link_timeout(3)</A></B> function prepares a timeout request for
+       linked sqes. The submission queue entry <I>sqe</I> is setup a timeout specified
+       by <I>ts</I>.  The flags argument holds modifier <I>flags</I> for the timeout behaviour
+       of the request.
+
+       The <I>ts</I> argument must be filled in with the appropriate information for
+       the timeout. It looks as follows:
+
+           struct __kernel_timespec {
+               __kernel_time64_t tv_sec;
+               long long tv_nsec;
+           };
+
+       The <I>flags</I> argument may contain:
+
+       <B>IORING_TIMEOUT_ABS</B>
+              The value specified in <I>ts</I> is an absolute value rather than a
+              relative one.
+
+       <B>IORING_TIMEOUT_BOOTTIME</B>
+              The boottime clock source should be used.
+
+       <B>IORING_TIMEOUT_REALTIME</B>
+              The realtime clock source should be used.
+
+       <B>IORING_TIMEOUT_ETIME_SUCCESS</B>
+              Consider an expired timeout a success in terms of the posted
+              completion.
+
+       It is invalid to create a chain (linked sqes) consisting only of a link
+       timeout request. If all the requests in the chain are completed before
+       timeout, then the link timeout request gets cancelled. Upon timeout, all
+       the uncompleted requests in the chain get cancelled.
+
+
+
+</PRE>
+<H2>RETURN VALUE</H2><PRE>
+       None
+
+
+
+</PRE>
+<H2>ERRORS</H2><PRE>
+       These are the errors that are reported in the CQE <I>res</I> field. On success,
+       <B>0</B> is returned.
+
+       <B>-ETIME</B> The specified timeout occurred and triggered the completion event.
+
+
+</PRE>
+<H2>SEE ALSO</H2><PRE>
+       <B><A HREF="io_uring_get_sqe.3.html">io_uring_get_sqe(3)</A></B>, <B><A HREF="io_uring_prep_timeout.3.html">io_uring_prep_timeout(3)</A></B>
+
+
+
+liburing-2.4                    January 23, 2023   <B><A HREF="io_uring_prep_link_timeout.3.html">io_uring_prep_link_timeout(3)</A></B>
+</PRE>
+<HR>
+<ADDRESS>
+Man(1) output converted with
+<a href="http://www.oac.uci.edu/indiv/ehood/man2html.html">man2html</a>
+</ADDRESS>
+</BODY>
+</HTML>

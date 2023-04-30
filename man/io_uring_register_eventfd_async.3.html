@@ -1,0 +1,65 @@
+<HTML>
+<BODY>
+<PRE>
+<!-- Manpage converted by man2html 3.0.1 -->
+
+</PRE>
+<H2>SYNOPSIS</H2><PRE>
+       <B>#include</B> <B>&lt;liburing.h&gt;</B>
+
+       <B>int</B> <B>io_uring_register_eventfd(struct</B> <B>io_uring</B> <B>*</B><I>ring</I><B>,</B>
+                                     <B>int</B> <I>fd</I><B>);</B>
+
+       <B>int</B> <B>io_uring_register_eventfd_async(struct</B> <B>io_uring</B> <B>*</B><I>ring</I><B>,</B>
+                                           <B>int</B> <I>fd</I><B>);</B>
+
+       <B>int</B> <B>io_uring_unregister_eventfd(struct</B> <B>io_uring</B> <B>*</B><I>ring</I><B>);</B>
+
+
+</PRE>
+<H2>DESCRIPTION</H2><PRE>
+       <B><A HREF="io_uring_register_eventfd.3.html">io_uring_register_eventfd(3)</A></B> registers the eventfd file descriptor <I>fd</I>
+       with the ring identified by <I>ring</I>.
+
+       Whenever completions are posted to the CQ ring, an eventfd notification
+       is generated with the registered eventfd descriptor. If
+       <B><A HREF="io_uring_register_eventfd_async.3.html">io_uring_register_eventfd_async(3)</A></B> is used, only events that completed
+       out-of-line will trigger a notification.
+
+       It notifications are no longer desired, <B><A HREF="io_uring_unregister_eventfd.3.html">io_uring_unregister_eventfd(3)</A></B>
+       may be called to remove the eventfd registration. No eventfd argument is
+       needed, as a ring can only have a single eventfd registered.
+
+
+
+</PRE>
+<H2>NOTES</H2><PRE>
+       While io_uring generally takes care to avoid spurious events, they can
+       occur.  Similarly, batched completions of CQEs may only trigger a single
+       eventfd notification even if multiple CQEs are posted. The application
+       should make no assumptions on number of events being available having a
+       direct correlation to eventfd notifications posted. An eventfd
+       notification must thus only be treated as a hint to check the CQ ring for
+       completions.
+
+
+</PRE>
+<H2>RETURN VALUE</H2><PRE>
+       Returns 0 on success, or or <B>-errno</B> on error.
+
+
+</PRE>
+<H2>SEE ALSO</H2><PRE>
+       <B><A HREF="eventfd.2.html">eventfd(2)</A></B>
+
+
+
+liburing-2.2                     April 16, 2022     <B><A HREF="io_uring_register_eventfd.3.html">io_uring_register_eventfd(3)</A></B>
+</PRE>
+<HR>
+<ADDRESS>
+Man(1) output converted with
+<a href="http://www.oac.uci.edu/indiv/ehood/man2html.html">man2html</a>
+</ADDRESS>
+</BODY>
+</HTML>

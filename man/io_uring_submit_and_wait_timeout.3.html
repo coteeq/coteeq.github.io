@@ -1,0 +1,58 @@
+<HTML>
+<BODY>
+<PRE>
+<!-- Manpage converted by man2html 3.0.1 -->
+
+
+</PRE>
+<H2>SYNOPSIS</H2><PRE>
+       <B>#include</B> <B>&lt;liburing.h&gt;</B>
+
+       <B>int</B> <B>io_uring_submit_and_wait_timeout(struct</B> <B>io_uring</B> <B>*</B><I>ring</I><B>,</B>
+                                            <B>struct</B> <B>io_uring_cqe</B> <B>**</B><I>cqe</I><B>_</B><I>ptr</I><B>,</B>
+                                            <B>unsigned</B> <I>wait</I><B>_</B><I>nr</I><B>,</B>
+                                            <B>struct</B> <B>__kernel_timespec</B> <B>*</B><I>ts</I><B>,</B>
+                                            <B>sigset_t</B> <B>*</B><I>sigmask</I><B>);</B>
+
+
+</PRE>
+<H2>DESCRIPTION</H2><PRE>
+       The <B><A HREF="io_uring_submit_and_wait_timeout.3.html">io_uring_submit_and_wait_timeout(3)</A></B> function submits the next
+       requests from the submission queue belonging to the <I>ring</I> and waits for
+       <I>wait</I><B>_</B><I>nr</I> completion events, or until the timeout <I>ts</I> expires. The
+       completion events are stored in the <I>cqe</I><B>_</B><I>ptr</I> array. The <I>sigmask</I> specifies
+       the set of signals to block. The prevailing signal mask is restored
+       before returning.
+
+       After the caller retrieves a submission queue entry (SQE) with
+       <B><A HREF="io_uring_get_sqe.3.html">io_uring_get_sqe(3)</A></B> and prepares the SQE, it can be submitted with
+       <B><A HREF="io_uring_submit_and_wait_timeout.3.html">io_uring_submit_and_wait_timeout(3)</A></B><B>.</B>
+
+
+
+</PRE>
+<H2>RETURN VALUE</H2><PRE>
+       On success <B><A HREF="io_uring_submit_and_wait_timeout.3.html">io_uring_submit_and_wait_timeout(3)</A></B> returns the number of
+       submitted submission queue entries. On failure it returns <B>-errno</B>.  Note
+       that in earlier versions of the liburing library, the return value was 0
+       on success.  The most common failure case is not receiving a completion
+       within the specified timeout, <B>-ETIME</B> is returned in this case.
+
+
+</PRE>
+<H2>SEE ALSO</H2><PRE>
+       <B><A HREF="io_uring_get_sqe.3.html">io_uring_get_sqe(3)</A></B>, <B><A HREF="io_uring_submit.3.html">io_uring_submit(3)</A></B>, <B><A HREF="io_uring_submit_and_wait.3.html">io_uring_submit_and_wait(3)</A></B>,
+       <B><A HREF="io_uring_wait_cqe.3.html">io_uring_wait_cqe(3)</A></B>
+
+
+
+liburing-2.1                    November 15, 2021
+                                             <B><A HREF="io_uring_submit_and_wait_timeout.3.html">io_uring_submit_and_wait_timeout(3)</A></B>
+</PRE>
+<HR>
+<ADDRESS>
+Man(1) output converted with
+<a href="http://www.oac.uci.edu/indiv/ehood/man2html.html">man2html</a>
+</ADDRESS>
+</BODY>
+</HTML>

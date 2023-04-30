@@ -1,0 +1,72 @@
+<HTML>
+<BODY>
+<PRE>
+<!-- Manpage converted by man2html 3.0.1 -->
+
+</PRE>
+<H2>SYNOPSIS</H2><PRE>
+       <B>#include</B> <B>&lt;liburing.h&gt;</B>
+
+       <B>void</B> <B>io_uring_prep_msg_ring(struct</B> <B>io_uring_sqe</B> <B>*</B><I>sqe</I><B>,</B>
+                               <B>int</B> <I>fd</I><B>,</B>
+                               <B>unsigned</B> <B>int</B> <I>len</I><B>,</B>
+                               <B>__u64</B> <I>data</I><B>,</B>
+                               <B>unsigned</B> <B>int</B> <I>flags</I><B>);</B>
+
+       <B>void</B> <B>io_uring_prep_msg_ring_cqe_flags(struct</B> <B>io_uring_sqe</B> <B>*</B><I>sqe</I><B>,</B>
+                               <B>int</B> <I>fd</I><B>,</B>
+                               <B>unsigned</B> <B>int</B> <I>len</I><B>,</B>
+                               <B>__u64</B> <I>data</I><B>,</B>
+                               <B>unsigned</B> <B>int</B> <I>flags</I><B>,</B>
+                               <B>unsigned</B> <B>int</B> <I>cqe</I><B>_</B><I>flags</I><B>);</B>
+
+
+</PRE>
+<H2>DESCRIPTION</H2><PRE>
+       <B><A HREF="io_uring_prep_msg_ring.3.html">io_uring_prep_msg_ring(3)</A></B> prepares to send a CQE to an io_uring file
+       descriptor. The submission queue entry <I>sqe</I> is setup to use the file
+       descriptor <I>fd</I>, which must identify a io_uring context, to post a CQE on
+       that ring where the target CQE <B>res</B> field will contain the content of <I>len</I>
+       and the <B>user_data</B> of <I>data</I> with the request modifier flags set by <I>flags</I>.
+       Currently there are no valid flag modifiers, this field must contain <B>0</B>.
+
+       The targeted ring may be any ring that the user has access to, even the
+       ring itself. This request can be used for simple message passing to
+       another ring, allowing 32+64 bits of data to be transferred through the
+       <I>len</I> and <I>data</I> fields. The use case may be anything from simply waking up
+       someone waiting on the targeted ring, or it can be used to pass messages
+       between the two rings.
+
+       <B><A HREF="io_uring_prep_msg_ring_cqe_flags.3.html">io_uring_prep_msg_ring_cqe_flags(3)</A></B> is similar to
+       <B><A HREF="io_uring_prep_msg_ring.3.html">io_uring_prep_msg_ring(3)</A></B><B>.</B>  But has an addition <I>cqe</I><B>_</B><I>flags</I> parameter,
+       which is used to set <I>flags</I> field on CQE side. That way, you can set the
+       CQE flags field <I>cqe-&gt;flags</I> when sending a message. Be aware that io_uring
+       could potentially set additional bits into this field.
+
+
+
+</PRE>
+<H2>RETURN VALUE</H2><PRE>
+       None
+
+
+
+</PRE>
+<H2>ERRORS</H2><PRE>
+       These are the errors that are reported in the CQE <I>res</I> field.
+
+       <B>-ENOMEM</B>
+              The kernel was unable to allocate memory for the request.
+
+       <B>-EINVAL</B>
+              One of the fields set in the SQE was invalid.
+
+       <B>-EBADFD</B>
+</PRE>
+<HR>
+<ADDRESS>
+Man(1) output converted with
+<a href="http://www.oac.uci.edu/indiv/ehood/man2html.html">man2html</a>
+</ADDRESS>
+</BODY>
+</HTML>

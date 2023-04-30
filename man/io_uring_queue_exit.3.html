@@ -1,0 +1,40 @@
+<HTML>
+<BODY>
+<PRE>
+<!-- Manpage converted by man2html 3.0.1 -->
+
+</PRE>
+<H2>SYNOPSIS</H2><PRE>
+       <B>#include</B> <B>&lt;liburing.h&gt;</B>
+
+       <B>void</B> <B>io_uring_queue_exit(struct</B> <B>io_uring</B> <B>*</B><I>ring</I><B>);</B>
+
+
+</PRE>
+<H2>DESCRIPTION</H2><PRE>
+       <B><A HREF="io_uring_queue_exit.3.html">io_uring_queue_exit(3)</A></B> will release all resources acquired and
+       initialized by <B><A HREF="io_uring_queue_init.3.html">io_uring_queue_init(3)</A></B>.  It first unmaps the memory shared
+       between the application and the kernel and then closes the io_uring file
+       descriptor.
+
+
+</PRE>
+<H2>RETURN VALUE</H2><PRE>
+       None
+
+
+</PRE>
+<H2>SEE ALSO</H2><PRE>
+       <B><A HREF="io_uring_setup.2.html">io_uring_setup(2)</A></B>, <B><A HREF="mmap.2.html">mmap(2)</A></B>, <B><A HREF="io_uring_queue_init.3.html">io_uring_queue_init(3)</A></B>
+
+
+
+liburing-0.7                      July 10, 2020           <B><A HREF="io_uring_queue_exit.3.html">io_uring_queue_exit(3)</A></B>
+</PRE>
+<HR>
+<ADDRESS>
+Man(1) output converted with
+<a href="http://www.oac.uci.edu/indiv/ehood/man2html.html">man2html</a>
+</ADDRESS>
+</BODY>
+</HTML>

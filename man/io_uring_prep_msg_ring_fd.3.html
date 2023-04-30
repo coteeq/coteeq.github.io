@@ -1,0 +1,72 @@
+<HTML>
+<BODY>
+<PRE>
+<!-- Manpage converted by man2html 3.0.1 -->
+
+</PRE>
+<H2>SYNOPSIS</H2><PRE>
+       <B>#include</B> <B>&lt;liburing.h&gt;</B>
+
+       <B>void</B> <B>io_uring_prep_msg_ring_fd(struct</B> <B>io_uring_sqe</B> <B>*</B><I>sqe</I><B>,</B>
+                               <B>int</B> <I>fd</I><B>,</B>
+                               <B>int</B> <I>source</I><B>_</B><I>fd</I><B>,</B>
+                               <B>int</B> <I>target</I><B>_</B><I>fd</I><B>,</B>
+                               <B>__u64</B> <I>data</I><B>,</B>
+                               <B>unsigned</B> <B>int</B> <I>flags</I><B>);</B>
+
+       <B>void</B> <B>io_uring_prep_msg_ring_fd_alloc(struct</B> <B>io_uring_sqe</B> <B>*</B><I>sqe</I><B>,</B>
+                               <B>int</B> <I>fd</I><B>,</B>
+                               <B>int</B> <I>source</I><B>_</B><I>fd</I><B>,</B>
+                               <B>__u64</B> <I>data</I><B>,</B>
+                               <B>unsigned</B> <B>int</B> <I>flags</I><B>);</B>
+
+
+</PRE>
+<H2>DESCRIPTION</H2><PRE>
+       <B><A HREF="io_uring_prep_msg_ring_fd.3.html">io_uring_prep_msg_ring_fd(3)</A></B> prepares an SQE to send a direct file
+       descriptor to another ring. The submission queue entry <I>sqe</I> is setup to
+       use the file descriptor <I>fd</I>, which must identify a target io_uring
+       context, to send the locally registered file descriptor with value
+       <I>source</I><B>_</B><I>fd</I> to the destination ring into index <I>target</I><B>_</B><I>fd</I> and passing <I>data</I>
+       as the user data in the target CQE with the request modifier flags set by
+       <I>flags</I>.  Currently there are no valid flag modifiers, this field must
+       contain <B>0</B>.
+
+       <B><A HREF="io_uring_prep_msg_ring_fd_alloc.3.html">io_uring_prep_msg_ring_fd_alloc(3)</A></B> is similar to
+       <B><A HREF="io_uring_prep_msg_ring_fd.3.html">io_uring_prep_msg_ring_fd(3)</A></B><B>,</B> but doesn't specify a target index for the
+       direct descriptor. Instead, this index is allocated in the target ring
+       and returned in the CQE <I>res</I> field.
+
+
+
+</PRE>
+<H2>RETURN VALUE</H2><PRE>
+       None
+
+
+
+</PRE>
+<H2>ERRORS</H2><PRE>
+       These are the errors that are reported in the CQE <I>res</I> field.
+
+       <B>-ENOMEM</B>
+              The kernel was unable to allocate memory for the request.
+
+       <B>-EINVAL</B>
+              One of the fields set in the SQE was invalid.
+
+       <B>-EINVAL</B>
+              Target ring is identical to the source ring.
+
+       <B>-EBADFD</B>
+              The descriptor passed in <I>fd</I> does not refer to an io_uring file
+              descriptor, or the ring is in a disabled state.
+
+</PRE>
+<HR>
+<ADDRESS>
+Man(1) output converted with
+<a href="http://www.oac.uci.edu/indiv/ehood/man2html.html">man2html</a>
+</ADDRESS>
+</BODY>
+</HTML>

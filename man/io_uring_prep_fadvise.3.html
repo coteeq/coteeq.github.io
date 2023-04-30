@@ -1,0 +1,59 @@
+<HTML>
+<BODY>
+<PRE>
+<!-- Manpage converted by man2html 3.0.1 -->
+
+</PRE>
+<H2>SYNOPSIS</H2><PRE>
+       <B>#include</B> <B>&lt;fcntl.h&gt;</B>
+       <B>#include</B> <B>&lt;liburing.h&gt;</B>
+
+       <B>void</B> <B>io_uring_prep_fadvise(struct</B> <B>io_uring_sqe</B> <B>*</B><I>sqe</I><B>,</B>
+                                  <B>int</B> <I>fd</I><B>,</B>
+                                  <B>__u64</B> <I>offset</I><B>,</B>
+                                  <B>off_t</B> <I>len</I><B>,</B>
+                                  <B>int</B> <I>advice</I><B>);</B>
+
+
+</PRE>
+<H2>DESCRIPTION</H2><PRE>
+       The <B><A HREF="io_uring_prep_fadvise.3.html">io_uring_prep_fadvise(3)</A></B> function prepares an fadvise request. The
+       submission queue entry <I>sqe</I> is setup to use the file descriptor pointed to
+       by <I>fd</I> to start an fadvise operation at <I>offset</I> and of <I>len</I> length in bytes,
+       giving it the advise located in <I>advice</I>.
+
+       This function prepares an async <B><A HREF="posix_fadvise.2.html">posix_fadvise(2)</A></B> request. See that man
+       page for details.
+
+
+
+</PRE>
+<H2>RETURN VALUE</H2><PRE>
+       None
+
+
+</PRE>
+<H2>ERRORS</H2><PRE>
+       The CQE <I>res</I> field will contain the result of the operation. See the
+       related man page for details on possible values. Note that where
+       synchronous system calls will return <B>-1</B> on failure and set <I>errno</I> to the
+       actual error value, io_uring never uses <I>errno</I>.  Instead it returns the
+       negated <I>errno</I> directly in the CQE <I>res</I> field.
+
+
+</PRE>
+<H2>SEE ALSO</H2><PRE>
+       <B><A HREF="io_uring_get_sqe.3.html">io_uring_get_sqe(3)</A></B>, <B><A HREF="io_uring_submit.3.html">io_uring_submit(3)</A></B>, <B><A HREF="io_uring_register.2.html">io_uring_register(2)</A></B>,
+       <B><A HREF="posix_fadvise.2.html">posix_fadvise(2)</A></B>
+
+
+
+liburing-2.2                     March 13, 2022         <B><A HREF="io_uring_prep_fadvise.3.html">io_uring_prep_fadvise(3)</A></B>
+</PRE>
+<HR>
+<ADDRESS>
+Man(1) output converted with
+<a href="http://www.oac.uci.edu/indiv/ehood/man2html.html">man2html</a>
+</ADDRESS>
+</BODY>
+</HTML>

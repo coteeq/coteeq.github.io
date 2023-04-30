@@ -1,0 +1,51 @@
+<HTML>
+<BODY>
+<PRE>
+<!-- Manpage converted by man2html 3.0.1 -->
+
+</PRE>
+<H2>SYNOPSIS</H2><PRE>
+       <B>#include</B> <B>&lt;liburing.h&gt;</B>
+
+       <B>void</B> <B>io_uring_sqe_set_data(struct</B> <B>io_uring_sqe</B> <B>*</B><I>sqe</I><B>,</B>
+                                  <B>void</B> <B>*</B><I>user</I><B>_</B><I>data</I><B>);</B>
+       <B>void</B> <B>io_uring_sqe_set_data64(struct</B> <B>io_uring_sqe</B> <B>*</B><I>sqe</I><B>,</B>
+                                    <B>__u64</B> <I>data</I><B>);</B>
+
+
+</PRE>
+<H2>DESCRIPTION</H2><PRE>
+       The <B><A HREF="io_uring_sqe_set_data.3.html">io_uring_sqe_set_data(3)</A></B> function stores a <I>user</I><B>_</B><I>data</I> pointer with the
+       submission queue entry <I>sqe</I>.
+
+       The <B><A HREF="io_uring_sqe_set_data64.3.html">io_uring_sqe_set_data64(3)</A></B> function stores a 64-bit <I>data</I> value with
+       the submission queue entry <I>sqe</I>.
+
+       After the caller has requested a submission queue entry (SQE) with
+       <B><A HREF="io_uring_get_sqe.3.html">io_uring_get_sqe(3)</A></B><B>,</B> they can associate a data pointer or value with the
+       SQE. Once the completion arrives, the function <B><A HREF="io_uring_cqe_get_data.3.html">io_uring_cqe_get_data(3)</A></B>
+       or <B><A HREF="io_uring_cqe_get_data64.3.html">io_uring_cqe_get_data64(3)</A></B> can be called to retrieve the data pointer
+       or value associated with the submitted request.
+
+
+
+</PRE>
+<H2>RETURN VALUE</H2><PRE>
+       None
+
+
+</PRE>
+<H2>SEE ALSO</H2><PRE>
+       <B><A HREF="io_uring_get_sqe.3.html">io_uring_get_sqe(3)</A></B>, <B><A HREF="io_uring_cqe_get_data.3.html">io_uring_cqe_get_data(3)</A></B>
+
+
+
+liburing-2.1                    November 15, 2021       <B><A HREF="io_uring_sqe_set_data.3.html">io_uring_sqe_set_data(3)</A></B>
+</PRE>
+<HR>
+<ADDRESS>
+Man(1) output converted with
+<a href="http://www.oac.uci.edu/indiv/ehood/man2html.html">man2html</a>
+</ADDRESS>
+</BODY>
+</HTML>

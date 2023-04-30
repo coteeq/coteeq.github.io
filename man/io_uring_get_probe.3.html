@@ -1,0 +1,48 @@
+<HTML>
+<BODY>
+<PRE>
+<!-- Manpage converted by man2html 3.0.1 -->
+
+</PRE>
+<H2>SYNOPSIS</H2><PRE>
+       <B>#include</B> <B>&lt;liburing.h&gt;</B>
+
+       <B>io_uring_probe</B> <B>*io_uring_get_probe(void);</B>
+
+
+</PRE>
+<H2>DESCRIPTION</H2><PRE>
+       The function <B><A HREF="io_uring_get_probe.3.html">io_uring_get_probe(3)</A></B> returns an allocated io_uring_probe
+       structure to the caller. The caller is responsible for freeing the
+       structure with the function <B><A HREF="io_uring_free_probe.3.html">io_uring_free_probe(3)</A></B>.
+
+
+
+</PRE>
+<H2>NOTES</H2><PRE>
+       Earlier versions of the Linux kernel do not support probe. If the kernel
+       doesn't support probe, this function will return NULL.
+
+
+
+</PRE>
+<H2>RETURN VALUE</H2><PRE>
+       On success it returns an allocated io_uring_probe structure, otherwise it
+       returns NULL.
+
+
+</PRE>
+<H2>SEE ALSO</H2><PRE>
+       <B><A HREF="io_uring_free_probe.3.html">io_uring_free_probe(3)</A></B>
+
+
+
+liburing-2.1                    January 25, 2022           <B><A HREF="io_uring_get_probe.3.html">io_uring_get_probe(3)</A></B>
+</PRE>
+<HR>
+<ADDRESS>
+Man(1) output converted with
+<a href="http://www.oac.uci.edu/indiv/ehood/man2html.html">man2html</a>
+</ADDRESS>
+</BODY>
+</HTML>

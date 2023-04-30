@@ -1,0 +1,90 @@
+<HTML>
+<BODY>
+<PRE>
+<!-- Manpage converted by man2html 3.0.1 -->
+
+</PRE>
+<H2>SYNOPSIS</H2><PRE>
+       <B>#include</B> <B>&lt;liburing.h&gt;</B>
+
+       <B>void</B> <B>io_uring_prep_provide_buffers(struct</B> <B>io_uring_sqe</B> <B>*</B><I>sqe</I><B>,</B>
+                                          <B>void</B> <B>*</B><I>addr</I><B>,</B>
+                                          <B>int</B> <I>len</I><B>,</B>
+                                          <B>int</B> <I>nr</I><B>,</B>
+                                          <B>int</B> <I>bgid</I><B>,</B>
+                                          <B>int</B> <I>bid</I><B>);</B>
+
+
+</PRE>
+<H2>DESCRIPTION</H2><PRE>
+       The <B><A HREF="io_uring_prep_provide_buffers.3.html">io_uring_prep_provide_buffers(3)</A></B> function prepares a request for
+       providing the kernel with buffers. The submission queue entry <I>sqe</I> is
+       setup to consume <I>nr</I> number of <I>len</I> sized buffers starting at <I>addr</I> and
+       identified by the buffer group ID of <I>bgid</I> and numbered sequentially
+       starting at <I>bid</I>.
+
+       This function sets up a request to provide buffers to the io_uring
+       context that can be used by read or receive operations. This is done by
+       filling in the SQE <I>buf</I><B>_</B><I>group</I> field and setting <B>IOSQE_BUFFER_SELECT</B> in the
+       SQE <I>flags</I> member. If buffer selection is used for a request, no buffer
+       should be provided in the address field. Instead, the group ID is set to
+       match one that was previously provided to the kernel. The kernel will
+       then select a buffer from this group for the IO operation. On successful
+       completion of the IO request, the CQE <I>flags</I> field will have
+       <B>IORING_CQE_F_BUFFER</B> set and the selected buffer ID will be indicated by
+       the upper 16-bits of the <I>flags</I> field.
+
+       Different buffer group IDs can be used by the application to have
+       different sizes or types of buffers available. Once a buffer has been
+       consumed for an operation, it is no longer known to io_uring. It must be
+       re-provided if so desired or freed by the application if no longer
+       needed.
+
+       The buffer IDs are internally tracked from <I>bid</I> and sequentially ascending
+       from that value. If <B>16</B> buffers are provided and start with an initial <I>bid</I>
+       of 0, then the buffer IDs will range from <B>0..15</B>.  The application must be
+       aware of this to make sense of the buffer ID passed back in the CQE.
+
+       Buffer IDs always range from <B>0</B> to <B>65535</B> <B>,</B> as there are only 16-bits
+       available in the CQE to pass them back. This range is independent of how
+       the buffer group initially got created. Attempting to add buffer IDs
+       larger than that, or buffer IDs that will wrap when cast to a 16-bit
+       value, will cause the request to fail with <B>-E2BIG</B> or <B>-EINVAL</B> <B>.</B>
+
+       Not all requests support buffer selection, as it only really makes sense
+       for requests that receive data from the kernel rather than write or
+       provide data.  Currently, this mode of operation is supported for any
+       file read or socket receive request. Attempting to use
+       <B>IOSQE_BUFFER_SELECT</B> with a command that doesn't support it will result in
+       a CQE <I>res</I> error of <B>-EINVAL</B>.  Buffer selection will work with operations
+       that take a <B>struct</B> <B>iovec</B> as its data destination, but only if 1 iovec is
+
+       <B>-E2BIG</B> The number of buffers provided was too big, or the <I>bid</I> was too
+              big. A max value of <B>USHRT_MAX</B> buffers can be specified.
+
+       <B>-EFAULT</B>
+              Some of the user memory given was invalid for the application.
+
+       <B>-EOVERFLOW</B>
+              The product of <I>len</I> and <I>nr</I> exceed the valid amount or overflowed,
+              or the sum of <I>addr</I> and the length of buffers overflowed.
+
+       <B>-EBUSY</B> Attempt to update a slot that is already used.
+
+
+</PRE>
+<H2>SEE ALSO</H2><PRE>
+       <B><A HREF="io_uring_get_sqe.3.html">io_uring_get_sqe(3)</A></B>, <B><A HREF="io_uring_submit.3.html">io_uring_submit(3)</A></B>, <B><A HREF="io_uring_register.2.html">io_uring_register(2)</A></B>,
+       <B><A HREF="io_uring_prep_remove_buffers.3.html">io_uring_prep_remove_buffers(3)</A></B>
+
+
+
+liburing-2.2                     March 13, 2022 <B><A HREF="io_uring_prep_provide_buffers.3.html">io_uring_prep_provide_buffers(3)</A></B>
+</PRE>
+<HR>
+<ADDRESS>
+Man(1) output converted with
+<a href="http://www.oac.uci.edu/indiv/ehood/man2html.html">man2html</a>
+</ADDRESS>
+</BODY>
+</HTML>

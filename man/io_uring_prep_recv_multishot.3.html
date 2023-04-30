@@ -1,0 +1,71 @@
+<HTML>
+<BODY>
+<PRE>
+<!-- Manpage converted by man2html 3.0.1 -->
+
+</PRE>
+<H2>SYNOPSIS</H2><PRE>
+       <B>#include</B> <B>&lt;liburing.h&gt;</B>
+
+       <B>void</B> <B>io_uring_prep_recv(struct</B> <B>io_uring_sqe</B> <B>*</B><I>sqe</I><B>,</B>
+                               <B>int</B> <I>sockfd</I><B>,</B>
+                               <B>void</B> <B>*</B><I>buf</I><B>,</B>
+                               <B>size_t</B> <I>len</I><B>,</B>
+                               <B>int</B> <I>flags</I><B>);</B>
+
+       <B>void</B> <B>io_uring_prep_recv_multishot(struct</B> <B>io_uring_sqe</B> <B>*</B><I>sqe</I><B>,</B>
+                                         <B>int</B> <I>sockfd</I><B>,</B>
+                                         <B>void</B> <B>*</B><I>buf</I><B>,</B>
+                                         <B>size_t</B> <I>len</I><B>,</B>
+                                         <B>int</B> <I>flags</I><B>);</B>
+
+
+</PRE>
+<H2>DESCRIPTION</H2><PRE>
+       The <B><A HREF="io_uring_prep_recv.3.html">io_uring_prep_recv(3)</A></B> function prepares a recv request. The
+       submission queue entry <I>sqe</I> is setup to use the file descriptor <I>sockfd</I> to
+       start receiving the data into the destination buffer <I>buf</I> of size <I>len</I> and
+       with modifier flags <I>flags</I>.
+
+       This function prepares an async <B><A HREF="recv.2.html">recv(2)</A></B> request. See that man page for
+       details on the arguments specified to this prep helper.
+
+       The multishot version allows the application to issue a single receive
+       request, which repeatedly posts a CQE when data is available. It requires
+       length to be 0, the <B>IOSQE_BUFFER_SELECT</B> flag to be set and no <B>MSG_WAITALL</B>
+       flag to be set.  Therefore each CQE will take a buffer out of a provided
+       buffer pool for receiving.  The application should check the flags of
+       each CQE, regardless of its result.  If a posted CQE does not have the
+       <B>IORING_CQE_F_MORE</B> flag set then the multishot receive will be done and
+       the application should issue a new request.  Multishot variants are
+       available since kernel 6.0.
+
+
+       After calling this function, additional io_uring internal modifier flags
+       may be set in the SQE <I>ioprio</I> field. The following flags are supported:
+
+       <B>IORING_RECVSEND_POLL_FIRST</B>
+              If set, io_uring will assume the socket is currently empty and
+              attempting to receive data will be unsuccessful. For this case,
+              io_uring will arm internal poll and trigger a receive of the data
+              when the socket has data to be read.  This initial receive attempt
+              can be wasteful for the case where the socket is expected to be
+              empty, setting this flag will bypass the initial receive attempt
+              and go straight to arming poll. If poll does indicate that data is
+              ready to be received, the operation will proceed.
+
+              Can be used with the CQE <B>IORING_CQE_F_SOCK_NONEMPTY</B> flag, which
+              io_uring will set on CQEs after a <B><A HREF="recv.2.html">recv(2)</A></B> or <B><A HREF="recvmsg.2.html">recvmsg(2)</A></B> operation.
+              If set, the socket still had data to be read after the operation
+              completed. Both these flags are available since 5.19.
+
+
+liburing-2.2                     March 12, 2022            <B><A HREF="io_uring_prep_recv.3.html">io_uring_prep_recv(3)</A></B>
+</PRE>
+<HR>
+<ADDRESS>
+Man(1) output converted with
+<a href="http://www.oac.uci.edu/indiv/ehood/man2html.html">man2html</a>
+</ADDRESS>
+</BODY>
+</HTML>

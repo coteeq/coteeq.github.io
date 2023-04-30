@@ -1,0 +1,46 @@
+<HTML>
+<BODY>
+<PRE>
+<!-- Manpage converted by man2html 3.0.1 -->
+
+</PRE>
+<H2>SYNOPSIS</H2><PRE>
+       <B>#include</B> <B>&lt;liburing.h&gt;</B>
+
+       <B>int</B> <B>io_uring_sqring_wait(struct</B> <B>io_uring</B> <B>*</B><I>ring</I><B>);</B>
+
+
+</PRE>
+<H2>DESCRIPTION</H2><PRE>
+       The function <B><A HREF="io_uring_sqring_wait.3.html">io_uring_sqring_wait(3)</A></B> allows the caller to wait for space
+       to free up in the SQ ring belonging to the <I>ring</I> param, which happens when
+       the kernel side thread has consumed one or more entries. If the SQ ring
+       is currently non-full, no action is taken.
+
+       This feature can only be used when the ring has been setup with
+       <B>IORING_SETUP_SQPOLL</B> and hence is using an offloaded approach to request
+       submissions.
+
+
+
+</PRE>
+<H2>RETURN VALUE</H2><PRE>
+       On success it returns the free space. If the kernel does not support the
+       feature, -EINVAL is returned.
+
+
+</PRE>
+<H2>SEE ALSO</H2><PRE>
+       <B><A HREF="io_uring_submit.3.html">io_uring_submit(3)</A></B>, <B><A HREF="io_uring_wait_cqe.3.html">io_uring_wait_cqe(3)</A></B>, <B><A HREF="io_uring_wait_cqes.3.html">io_uring_wait_cqes(3)</A></B>
+
+
+
+liburing-2.1                    January 25, 2022         <B><A HREF="io_uring_sqring_wait.3.html">io_uring_sqring_wait(3)</A></B>
+</PRE>
+<HR>
+<ADDRESS>
+Man(1) output converted with
+<a href="http://www.oac.uci.edu/indiv/ehood/man2html.html">man2html</a>
+</ADDRESS>
+</BODY>
+</HTML>

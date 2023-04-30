@@ -1,0 +1,70 @@
+<HTML>
+<BODY>
+<PRE>
+<!-- Manpage converted by man2html 3.0.1 -->
+
+
+</PRE>
+<H2>SYNOPSIS</H2><PRE>
+       <B>#include</B> <B>&lt;liburing.h&gt;</B>
+
+       <B>struct</B> <B>io_uring_buf_ring</B> <B>*io_uring_setup_buf_ring(struct</B> <B>io_uring</B> <B>*</B><I>ring</I><B>,</B>
+                                   <B>unsigned</B> <B>int</B> <I>nentries</I><B>,</B>
+                                   <B>int</B> <I>bgid</I><B>,</B>
+                                   <B>unsigned</B> <B>int</B> <I>flags</I><B>,</B>
+                                   <B>int</B> <B>*</B><I>ret</I><B>);</B>
+
+
+</PRE>
+<H2>DESCRIPTION</H2><PRE>
+       The <B><A HREF="io_uring_setup_buf_ring.3.html">io_uring_setup_buf_ring(3)</A></B> function registers a shared buffer ring to
+       be used with provided buffers. For the request types that support it,
+       provided buffers are given to the ring and one is selected by a request
+       if it has <B>IOSQE_BUFFER_SELECT</B> set in the SQE <I>flags</I>, when the request is
+       ready to receive data. This allows both clear ownership of the buffer
+       lifetime, and a way to have more read/receive type of operations in
+       flight than buffers available.
+
+       The <I>ring</I> argument must pointer to the ring for which the provided buffer
+       ring is being registered, <I>nentries</I> is the number of entries requested in
+       the buffer ring. This argument must be a power-of 2 in size.  <I>bgid</I> is the
+       chosen buffer group ID, <I>flags</I> are modifier flags for the operation, and
+       <I>*ret</I> is is a pointer to an integer for the error value if any part of the
+       ring allocation and registration fails.
+
+       The <I>flags</I> argument is currently unused and must be set to zero.
+
+       Under the covers, this function uses <B><A HREF="io_uring_register_buf_ring.3.html">io_uring_register_buf_ring(3)</A></B> to
+       register the ring, and handles the allocation of the ring rather than
+       letting the application open code it.
+
+       To unregister and free a buffer group ID setup with this function, the
+       application must call <B><A HREF="io_uring_free_buf_ring.3.html">io_uring_free_buf_ring(3)</A></B><B>.</B>
+
+       Available since 5.19.
+
+
+
+</PRE>
+<H2>RETURN VALUE</H2><PRE>
+       On success <B><A HREF="io_uring_register_setup_ring.3.html">io_uring_register_setup_ring(3)</A></B> returns a pointer to the buffe
+       ring. On failure it returns <B>NULL</B> and sets <I>*ret</I> to -errno.
+
+
+</PRE>
+<H2>SEE ALSO</H2><PRE>
+       <B><A HREF="io_uring_register_buf_ring.3.html">io_uring_register_buf_ring(3)</A></B>, <B><A HREF="io_uring_buf_ring_init.3.html">io_uring_buf_ring_init(3)</A></B>,
+       <B><A HREF="io_uring_buf_ring_add.3.html">io_uring_buf_ring_add(3)</A></B>, <B><A HREF="io_uring_buf_ring_advance.3.html">io_uring_buf_ring_advance(3)</A></B>,
+       <B><A HREF="io_uring_buf_ring_cq_advance.3.html">io_uring_buf_ring_cq_advance(3)</A></B>
+
+
+
+liburing-2.4                      March 7, 2023       <B><A HREF="io_uring_setup_buf_ring.3.html">io_uring_setup_buf_ring(3)</A></B>
+</PRE>
+<HR>
+<ADDRESS>
+Man(1) output converted with
+<a href="http://www.oac.uci.edu/indiv/ehood/man2html.html">man2html</a>
+</ADDRESS>
+</BODY>
+</HTML>

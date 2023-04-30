@@ -1,0 +1,50 @@
+<HTML>
+<BODY>
+<PRE>
+<!-- Manpage converted by man2html 3.0.1 -->
+
+</PRE>
+<H2>SYNOPSIS</H2><PRE>
+       <B>#include</B> <B>&lt;liburing.h&gt;</B>
+
+       <B>void</B> <B>*io_uring_cqe_get_data(struct</B> <B>io_uring_cqe</B> <B>*</B><I>cqe</I><B>);</B>
+       <B>__u64</B> <B>io_uring_cqe_get_data64(struct</B> <B>io_uring_cqe</B> <B>*</B><I>cqe</I><B>);</B>
+
+
+</PRE>
+<H2>DESCRIPTION</H2><PRE>
+       The <B><A HREF="io_uring_cqe_get_data.3.html">io_uring_cqe_get_data(3)</A></B> function returns the user_data with the
+       completion queue entry <I>cqe</I> as a data pointer.
+
+       The <B><A HREF="io_uring_cqe_get_data64.3.html">io_uring_cqe_get_data64(3)</A></B> function returns the user_data with the
+       completion queue entry <I>cqe</I> as a 64-bit data value.
+
+       After the caller has received a completion queue entry (CQE) with
+       <B><A HREF="io_uring_wait_cqe.3.html">io_uring_wait_cqe(3)</A></B>, the application can call <B><A HREF="io_uring_cqe_get_data.3.html">io_uring_cqe_get_data(3)</A></B>
+       or <B><A HREF="io_uring_cqe_get_data64.3.html">io_uring_cqe_get_data64(3)</A></B> function to retrieve the <I>user</I><B>_</B><I>data</I> value.
+       This requires that <I>user</I><B>_</B><I>data</I> has been set earlier with the function
+       <B><A HREF="io_uring_sqe_set_data.3.html">io_uring_sqe_set_data(3)</A></B> or <B><A HREF="io_uring_sqe_set_data64.3.html">io_uring_sqe_set_data64(3)</A></B>.
+
+
+
+</PRE>
+<H2>RETURN VALUE</H2><PRE>
+       If the <I>user</I><B>_</B><I>data</I> value has been set before submitting the request, it
+       will be returned.  Otherwise, the return value is undefined.
+
+
+</PRE>
+<H2>SEE ALSO</H2><PRE>
+       <B><A HREF="io_uring_get_sqe.3.html">io_uring_get_sqe(3)</A></B>, <B><A HREF="io_uring_sqe_set_data.3.html">io_uring_sqe_set_data(3)</A></B>, <B><A HREF="io_uring_sqe_submit.3.html">io_uring_sqe_submit(3)</A></B>
+
+
+
+liburing-2.1                    November 15, 2021       <B><A HREF="io_uring_cqe_get_data.3.html">io_uring_cqe_get_data(3)</A></B>
+</PRE>
+<HR>
+<ADDRESS>
+Man(1) output converted with
+<a href="http://www.oac.uci.edu/indiv/ehood/man2html.html">man2html</a>
+</ADDRESS>
+</BODY>
+</HTML>

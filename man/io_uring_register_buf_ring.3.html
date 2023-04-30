@@ -1,0 +1,97 @@
+<HTML>
+<BODY>
+<PRE>
+<!-- Manpage converted by man2html 3.0.1 -->
+
+</PRE>
+<H2>SYNOPSIS</H2><PRE>
+       <B>#include</B> <B>&lt;liburing.h&gt;</B>
+
+       <B>int</B> <B>io_uring_register_buf_ring(struct</B> <B>io_uring</B> <B>*</B><I>ring</I><B>,</B>
+                                      <B>struct</B> <B>io_uring_buf_reg</B> <B>*</B><I>reg</I><B>,</B>
+                                      <B>unsigned</B> <B>int</B> <I>flags</I><B>);</B>
+
+
+</PRE>
+<H2>DESCRIPTION</H2><PRE>
+       The <B><A HREF="io_uring_register_buf_ring.3.html">io_uring_register_buf_ring(3)</A></B> function registers a shared buffer ring
+       to be used with provided buffers. For the request types that support it,
+       provided buffers are given to the ring and one is selected by a request
+       if it has <B>IOSQE_BUFFER_SELECT</B> set in the SQE <I>flags</I>, when the request is
+       ready to receive data. This allows both clear ownership of the buffer
+       lifetime, and a way to have more read/receive type of operations in
+       flight than buffers available.
+
+       The <I>reg</I> argument must be filled in with the appropriate information. It
+       looks as follows:
+
+           struct io_uring_buf_reg {
+               __u64 ring_addr;
+               __u32 ring_entries;
+               __u16 bgid;
+               __u16 pad;
+               __u64 resv[3];
+           };
+
+       The <I>ring</I><B>_</B><I>addr</I> field must contain the address to the memory allocated to
+       fit this ring.  The memory must be page aligned and hence allocated
+       appropriately using eg <B><A HREF="posix_memalign.3.html">posix_memalign(3)</A></B> or similar. The size of the ring
+       is the product of <I>ring</I><B>_</B><I>entries</I> and the size of <I>struct</I> <I>io</I><B>_</B><I>uring</I><B>_</B><I>buf</I>.
+       <I>ring</I><B>_</B><I>entries</I> is the desired size of the ring, and must be a power-of-2 in
+       size. The maximum size allowed is 2^15 (32768).  <I>bgid</I> is the buffer group
+       ID associated with this ring. SQEs that select a buffer have a buffer
+       group associated with them in their <I>buf</I><B>_</B><I>group</I> field, and the associated
+       CQEs will have <B>IORING_CQE_F_BUFFER</B> set in their <I>flags</I> member, which will
+       also contain the specific ID of the buffer selected. The rest of the
+       fields are reserved and must be cleared to zero.
+
+       The <I>flags</I> argument is currently unused and must be set to zero.
+
+       A shared buffer ring looks as follows:
+
+           struct io_uring_buf_ring {
+               union {
+                struct {
+                       __u64 resv1;
+                       __u32 resv2;
+                       __u16 resv3;
+                       __u16 tail;
+                };
+                struct io_uring_buf bufs[0];
+
+       where <I>addr</I> is the address for the buffer, <I>len</I> is the length of the buffer
+       in bytes, and <I>bid</I> is the buffer ID that will be returned in the CQE once
+       consumed.
+
+       Reserved fields must not be touched. Applications must use
+       <B><A HREF="io_uring_buf_ring_init.3.html">io_uring_buf_ring_init(3)</A></B> to initialise the buffer ring before use.
+       Applications may use <B><A HREF="io_uring_buf_ring_add.3.html">io_uring_buf_ring_add(3)</A></B> and
+       <B><A HREF="io_uring_buf_ring_advance.3.html">io_uring_buf_ring_advance(3)</A></B> or <B><A HREF="io_uring_buf_ring_cq_advance.3.html">io_uring_buf_ring_cq_advance(3)</A></B> to
+       provide buffers, which will set these fields and update the tail.
+
+       Available since 5.19.
+
+
+
+</PRE>
+<H2>RETURN VALUE</H2><PRE>
+       On success <B><A HREF="io_uring_register_buf_ring.3.html">io_uring_register_buf_ring(3)</A></B> returns 0. On failure it returns
+       <B>-errno</B>.
+
+
+</PRE>
+<H2>SEE ALSO</H2><PRE>
+       <B><A HREF="io_uring_buf_ring_init.3.html">io_uring_buf_ring_init(3)</A></B>, <B><A HREF="io_uring_buf_ring_add.3.html">io_uring_buf_ring_add(3)</A></B>,
+       <B><A HREF="io_uring_buf_ring_advance.3.html">io_uring_buf_ring_advance(3)</A></B>, <B><A HREF="io_uring_buf_ring_cq_advance.3.html">io_uring_buf_ring_cq_advance(3)</A></B>
+
+
+
+liburing-2.2                      May 18, 2022     <B><A HREF="io_uring_register_buf_ring.3.html">io_uring_register_buf_ring(3)</A></B>
+</PRE>
+<HR>
+<ADDRESS>
+Man(1) output converted with
+<a href="http://www.oac.uci.edu/indiv/ehood/man2html.html">man2html</a>
+</ADDRESS>
+</BODY>
+</HTML>

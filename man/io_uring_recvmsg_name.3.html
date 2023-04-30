@@ -1,0 +1,72 @@
+<HTML>
+<BODY>
+<PRE>
+<!-- Manpage converted by man2html 3.0.1 -->
+
+</PRE>
+<H2>SYNOPSIS</H2><PRE>
+       <B>#include</B> <B>&lt;liburing.h&gt;</B>
+
+       <B>struct</B> <B>io_uring_recvmsg_out</B> <B>*io_uring_recvmsg_validate(void</B> <B>*</B><I>buf</I><B>,</B>
+                                                              <B>int</B> <I>buf</I><B>_</B><I>len</I><B>,</B>
+                                                              <B>struct</B> <B>msghdr</B> <B>*</B><I>msgh</I><B>);</B>
+
+       <B>void</B> <B>*io_uring_recvmsg_name(struct</B> <B>io_uring_recvmsg_out</B> <B>*</B><I>o</I><B>);</B>
+
+       <B>struct</B> <B>cmsghdr</B> <B>*io_uring_recvmsg_cmsg_firsthdr(struct</B> <B>io_uring_recvmsg_out</B> <B>*</B><I>o</I><B>,</B>
+                                                      <B>struct</B> <B>msghdr</B> <B>*</B><I>msgh</I><B>);</B>
+       <B>struct</B> <B>cmsghdr</B> <B>*io_uring_recvmsg_cmsg_nexthdr(struct</B> <B>io_uring_recvmsg_out</B> <B>*</B><I>o</I><B>,</B>
+                                                     <B>struct</B> <B>msghdr</B> <B>*</B><I>msgh</I><B>,</B>
+                                                     <B>struct</B> <B>cmsghdr</B> <B>*</B><I>cmsg</I><B>);</B>
+
+       <B>void</B> <B>*io_uring_recvmsg_payload(struct</B> <B>io_uring_recvmsg_out</B> <B>*</B><I>o</I><B>,</B>
+                                      <B>struct</B> <B>msghdr</B> <B>*</B><I>msgh</I><B>);</B>
+       <B>unsigned</B> <B>int</B> <B>io_uring_recvmsg_payload_length(struct</B> <B>io_uring_recvmsg_out</B> <B>*</B><I>o</I><B>,</B>
+                                                    <B>int</B> <I>buf</I><B>_</B><I>len</I><B>,</B>
+                                                    <B>struct</B> <B>msghdr</B> <B>*</B><I>msgh</I><B>);</B>
+
+
+
+
+</PRE>
+<H2>DESCRIPTION</H2><PRE>
+       These functions are used to access data in the payload delivered by
+       <B><A HREF="io_uring_prep_recvmsg_multishot.3.html">io_uring_prep_recvmsg_multishot(3)</A></B>.
+
+       <I>msgh</I> should point to the <I>struct</I> <I>msghdr</I> submitted with the request.
+
+       <B><A HREF="io_uring_recvmsg_validate.3.html">io_uring_recvmsg_validate(3)</A></B> will validate a buffer delivered by
+       <B><A HREF="io_uring_prep_recvmsg_multishot.3.html">io_uring_prep_recvmsg_multishot(3)</A></B> and extract the <I>io</I><B>_</B><I>uring</I><B>_</B><I>recvmsg</I><B>_</B><I>out</I>
+       if it is valid, returning a pointer to it or else NULL.
+
+       The structure is defined as follows:
+
+
+           struct io_uring_recvmsg_out {
+                   __u32 namelen;    /* Name byte count as would have been populated
+                                      * by <B><A HREF="recvmsg.2.html">recvmsg(2)</A></B> */
+                   __u32 controllen; /* Control byte count */
+                   __u32 payloadlen; /* Payload byte count as would have been returned
+                                      * by <B><A HREF="recvmsg.2.html">recvmsg(2)</A></B> */
+                   __u32 flags;      /* Flags result as would have been populated
+                                      * by <B><A HREF="recvmsg.2.html">recvmsg(2)</A></B> */
+           };
+
+
+       *  <B><A HREF="io_uring_recvmsg_name.3.html">io_uring_recvmsg_name(3)</A></B>
+          returns a pointer to the name in the buffer.
+
+       *  <B><A HREF="io_uring_recvmsg_cmsg_firsthdr.3.html">io_uring_recvmsg_cmsg_firsthdr(3)</A></B>
+          returns a pointer to the first cmsg in the buffer, or NULL.
+
+
+
+liburing-2.2                      July 26, 2022          <B><A HREF="io_uring_recvmsg_out.3.html">io_uring_recvmsg_out(3)</A></B>
+</PRE>
+<HR>
+<ADDRESS>
+Man(1) output converted with
+<a href="http://www.oac.uci.edu/indiv/ehood/man2html.html">man2html</a>
+</ADDRESS>
+</BODY>
+</HTML>

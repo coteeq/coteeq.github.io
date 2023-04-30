@@ -1,0 +1,65 @@
+<HTML>
+<BODY>
+<PRE>
+<!-- Manpage converted by man2html 3.0.1 -->
+
+</PRE>
+<H2>SYNOPSIS</H2><PRE>
+       <B>#include</B> <B>&lt;liburing.h&gt;</B>
+
+       <B>int</B> <B>io_uring_register_sync_cancel(struct</B> <B>io_uring</B> <B>*</B><I>ring</I><B>,</B>
+                                         <B>struct</B> <B>io_uring_sync_cancel_reg</B> <B>*</B><I>reg</I><B>);</B>
+
+
+</PRE>
+<H2>DESCRIPTION</H2><PRE>
+       The <B><A HREF="io_uring_register_sync_cancel.3.html">io_uring_register_sync_cancel(3)</A></B> function performs a synchronous
+       cancelation request based on the parameters specified in <I>reg</I> <I>.</I>
+
+       The <I>reg</I> argument must be filled in with the appropriate information for
+       the cancelation request. It looks as follows:
+
+           struct io_uring_sync_cancel_reg {
+               __u64 addr;
+               __s32 fd;
+               __u32 flags;
+               struct __kernel_timespec timeout;
+               __u64 pad[4];
+           };
+
+       The arguments largely mirror what the async prep functions support, see
+       <B><A HREF="io_uring_prep_cancel.3.html">io_uring_prep_cancel(3)</A></B> for details. Similarly, the return value is the
+       same. The exception is the <I>timeout</I> argument, which can be used to limit
+       the time that the kernel will wait for cancelations to be successful. If
+       the <I>tv</I><B>_</B><I>sec</I> and <I>tv</I><B>_</B><I>nsec</I> values are set to anything but <B>-1UL</B> <B>,</B> then they
+       indicate a relative timeout upon which cancelations should be completed
+       by.
+
+       The <I>pad</I> values must be zero filled.
+
+
+
+</PRE>
+<H2>RETURN VALUE</H2><PRE>
+       See <B><A HREF="io_uring_prep_cancel.3.html">io_uring_prep_cancel(3)</A></B> for details on the return value. If <I>timeout</I>
+       is set to indicate a timeout, then <B>-ETIME</B> will be returned if exceeded.
+       If an unknown value is set in the request, or if the pad values are not
+       cleared to zero, then <I>-EINVAL</I> is returned.
+
+
+</PRE>
+<H2>SEE ALSO</H2><PRE>
+       <B><A HREF="io_uring_prep_cancel.3.html">io_uring_prep_cancel(3)</A></B>
+
+
+
+liburing-2.3                   September 21, 2022
+                                                <B><A HREF="io_uring_register_sync_cancel.3.html">io_uring_register_sync_cancel(3)</A></B>
+</PRE>
+<HR>
+<ADDRESS>
+Man(1) output converted with
+<a href="http://www.oac.uci.edu/indiv/ehood/man2html.html">man2html</a>
+</ADDRESS>
+</BODY>
+</HTML>

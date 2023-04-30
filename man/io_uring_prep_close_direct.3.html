@@ -1,0 +1,61 @@
+<HTML>
+<BODY>
+<PRE>
+<!-- Manpage converted by man2html 3.0.1 -->
+
+</PRE>
+<H2>SYNOPSIS</H2><PRE>
+       <B>#include</B> <B>&lt;liburing.h&gt;</B>
+
+       <B>void</B> <B>io_uring_prep_close(struct</B> <B>io_uring_sqe</B> <B>*</B><I>sqe</I><B>,</B>
+                                 <B>int</B> <I>fd</I><B>);</B>
+
+       <B>void</B> <B>io_uring_prep_close_direct(struct</B> <B>io_uring_sqe</B> <B>*</B><I>sqe</I><B>,</B>
+                                       <B>unsigned</B> <I>file</I><B>_</B><I>index</I><B>);</B>
+
+
+
+</PRE>
+<H2>DESCRIPTION</H2><PRE>
+       The <B><A HREF="io_uring_prep_close.3.html">io_uring_prep_close(3)</A></B> function prepares a close request. The
+       submission queue entry <I>sqe</I> is setup to close the file descriptor
+       indicated by <I>fd</I>.
+
+       For a direct descriptor close request, the offset is specified by the
+       <I>file</I><B>_</B><I>index</I> argument instead of the <I>fd</I>.  This is identical to
+       unregistering the direct descriptor, and is provided as a convenience.
+
+       These functions prepare an async <B><A HREF="close.2.html">close(2)</A></B> request. See that man page for
+       details.
+
+
+
+</PRE>
+<H2>RETURN VALUE</H2><PRE>
+       None
+
+
+</PRE>
+<H2>ERRORS</H2><PRE>
+       The CQE <I>res</I> field will contain the result of the operation. See the
+       related man page for details on possible values. Note that where
+       synchronous system calls will return <B>-1</B> on failure and set <I>errno</I> to the
+       actual error value, io_uring never uses <I>errno</I>.  Instead it returns the
+       negated <I>errno</I> directly in the CQE <I>res</I> field.
+
+
+</PRE>
+<H2>SEE ALSO</H2><PRE>
+       <B><A HREF="io_uring_get_sqe.3.html">io_uring_get_sqe(3)</A></B>, <B><A HREF="io_uring_submit.3.html">io_uring_submit(3)</A></B>, <B><A HREF="close.2.html">close(2)</A></B>
+
+
+
+liburing-2.2                     March 13, 2022           <B><A HREF="io_uring_prep_close.3.html">io_uring_prep_close(3)</A></B>
+</PRE>
+<HR>
+<ADDRESS>
+Man(1) output converted with
+<a href="http://www.oac.uci.edu/indiv/ehood/man2html.html">man2html</a>
+</ADDRESS>
+</BODY>
+</HTML>

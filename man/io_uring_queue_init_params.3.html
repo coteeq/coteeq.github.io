@@ -1,0 +1,70 @@
+<HTML>
+<BODY>
+<PRE>
+<!-- Manpage converted by man2html 3.0.1 -->
+
+</PRE>
+<H2>SYNOPSIS</H2><PRE>
+       <B>#include</B> <B>&lt;liburing.h&gt;</B>
+
+       <B>int</B> <B>io_uring_queue_init(unsigned</B> <I>entries</I><B>,</B>
+                               <B>struct</B> <B>io_uring</B> <B>*</B><I>ring</I><B>,</B>
+                               <B>unsigned</B> <I>flags</I><B>);</B>
+
+       <B>int</B> <B>io_uring_queue_init_params(unsigned</B> <I>entries</I><B>,</B>
+                                      <B>struct</B> <B>io_uring</B> <B>*</B><I>ring</I><B>,</B>
+                                      <B>struct</B> <B>io_uring_params</B> <B>*</B><I>params</I><B>);</B>
+
+
+</PRE>
+<H2>DESCRIPTION</H2><PRE>
+       The <B><A HREF="io_uring_queue_init.3.html">io_uring_queue_init(3)</A></B> function executes the <B><A HREF="io_uring_setup.2.html">io_uring_setup(2)</A></B> system
+       call to initialize the submission and completion queues in the kernel
+       with at least <I>entries</I> entries in the submission queue and then maps the
+       resulting file descriptor to memory shared between the application and
+       the kernel.
+
+       By default, the CQ ring will have twice the number of entries as
+       specified by <I>entries</I> for the SQ ring. This is adequate for regular file
+       or storage workloads, but may be too small networked workloads. The SQ
+       ring entries do not impose a limit on the number of in-flight requests
+       that the ring can support, it merely limits the number that can be
+       submitted to the kernel in one go (batch). if the CQ ring overflows, e.g.
+       more entries are generated than fits in the ring before the application
+       can reap them, then the ring enters a CQ ring overflow state. This is
+       indicated by <B>IORING_SQ_CQ_OVERFLOW</B> being set in the SQ ring flags. Unless
+       the kernel runs out of available memory, entries are not dropped, but it
+       is a much slower completion path and will slow down request processing.
+       For that reason it should be avoided and the CQ ring sized appropriately
+       for the workload. Setting <I>cq</I><B>_</B><I>entries</I> in <I>struct</I> <I>io</I><B>_</B><I>uring</I><B>_</B><I>params</I> will tell
+       the kernel to allocate this many entries for the CQ ring, independent of
+       the SQ ring size in given in <I>entries</I>.  If the value isn't a power of 2,
+       it will be rounded up to the nearest power of 2.
+
+       On success, <B><A HREF="io_uring_queue_init.3.html">io_uring_queue_init(3)</A></B> returns 0 and <I>ring</I> will point to the
+       shared memory containing the io_uring queues. On failure <B>-errno</B> is
+       returned.
+
+       <I>flags</I> will be passed through to the io_uring_setup syscall (see
+       <B><A HREF="io_uring_setup.2.html">io_uring_setup(2)</A></B>).
+
+       If the <B><A HREF="io_uring_queue_init_params.3.html">io_uring_queue_init_params(3)</A></B> variant is used, then the parameters
+       indicated by <I>params</I> will be passed straight through to the
+       <B><A HREF="io_uring_setup.2.html">io_uring_setup(2)</A></B> system call.
+
+       On success, the resources held by <I>ring</I> should be released via a
+       corresponding call to <B><A HREF="io_uring_queue_exit.3.html">io_uring_queue_exit(3)</A></B>.
+
+
+</PRE>
+<H2>RETURN VALUE</H2><PRE>
+       <B><A HREF="io_uring_queue_init.3.html">io_uring_queue_init(3)</A></B> returns 0 on success and <B>-errno</B> on failure.
+
+</PRE>
+<HR>
+<ADDRESS>
+Man(1) output converted with
+<a href="http://www.oac.uci.edu/indiv/ehood/man2html.html">man2html</a>
+</ADDRESS>
+</BODY>
+</HTML>

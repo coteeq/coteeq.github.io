@@ -1,0 +1,68 @@
+<HTML>
+<BODY>
+<PRE>
+<!-- Manpage converted by man2html 3.0.1 -->
+
+</PRE>
+<H2>SYNOPSIS</H2><PRE>
+       <B>#include</B> <B>&lt;liburing.h&gt;</B>
+
+       <B>int</B> <B>io_uring_register_buffers(struct</B> <B>io_uring</B> <B>*</B><I>ring</I><B>,</B>
+                                     <B>const</B> <B>struct</B> <B>iovec</B> <B>*</B><I>iovecs</I><B>,</B>
+                                     <B>unsigned</B> <I>nr</I><B>_</B><I>iovecs</I><B>);</B>
+
+       <B>int</B> <B>io_uring_register_buffers_tags(struct</B> <B>io_uring</B> <B>*</B><I>ring</I><B>,</B>
+                                          <B>const</B> <B>struct</B> <B>iovec</B> <B>*</B><I>iovecs</I><B>,</B>
+                                          <B>const</B> <B>__u64</B> <B>*</B><I>tags</I><B>,</B>
+                                          <B>unsigned</B> <I>nr</I><B>);</B>
+
+       <B>int</B> <B>io_uring_register_buffers_sparse(struct</B> <B>io_uring</B> <B>*</B><I>ring</I><B>,</B>
+                                            <B>unsigned</B> <I>nr</I><B>_</B><I>iovecs</I><B>);</B>
+
+       <B>int</B> <B>io_uring_register_buffers_update_tag(struct</B> <B>io_uring</B> <B>*</B><I>ring</I><B>,</B>
+                                                <B>unsigned</B> <I>off</I><B>,</B>
+                                                <B>const</B> <B>struct</B> <B>iovec</B> <B>*</B><I>iovecs</I><B>,</B>
+                                                <B>const</B> <B>__u64</B> <B>*</B><I>tags</I><B>,</B>
+                                                <B>unsigned</B> <I>nr</I><B>);</B>
+
+
+</PRE>
+<H2>DESCRIPTION</H2><PRE>
+       The <B><A HREF="io_uring_register_buffers.3.html">io_uring_register_buffers(3)</A></B> function registers <I>nr</I><B>_</B><I>iovecs</I> number of
+       buffers defined by the array <I>iovecs</I> belonging to the <I>ring</I>.
+
+       The <B><A HREF="io_uring_register_buffers_tags.3.html">io_uring_register_buffers_tags(3)</A></B> function behaves the same as
+       <B><A HREF="io_uring_register_buffers.3.html">io_uring_register_buffers(3)</A></B> function but additionally takes <I>tags</I>
+       parameter. See <B>IORING_REGISTER_BUFFERS2</B> for the resource tagging
+       description.
+
+       The <B><A HREF="io_uring_register_buffers_sparse.3.html">io_uring_register_buffers_sparse(3)</A></B> function registers <I>nr</I><B>_</B><I>iovecs</I>
+       empty buffers belonging to the <I>ring</I>.  These buffers must be updated
+       before use, using eg <B><A HREF="io_uring_register_buffers_update_tag.3.html">io_uring_register_buffers_update_tag(3)</A></B>.
+
+       After the caller has registered the buffers, they can be used with one of
+       the fixed buffers functions.
+
+       Registered buffers is an optimization that is useful in conjunction with
+       <B>O_DIRECT</B> reads and writes, where it maps the specified range into the
+       kernel once when the buffer is registered rather than doing a map and
+       unmap for each IO every time IO is performed to that region.
+       Additionally, it also avoids manipulating the page reference counts for
+       each IO.
+
+       The <B><A HREF="io_uring_register_buffers_update_tag.3.html">io_uring_register_buffers_update_tag(3)</A></B> function updates registered
+       buffers with new ones, either turning a sparse entry into a real one, or
+       replacing an existing entry. The <I>off</I> is offset on which to start the
+       update <I>nr</I> number of buffers defined by the array <I>iovecs</I> belonging to the
+       <I>ring</I>.  The <I>tags</I> points to an array of tags. See <B>IORING_REGISTER_BUFFERS2</B>
+       for the resource tagging description.
+
+
+</PRE>
+<HR>
+<ADDRESS>
+Man(1) output converted with
+<a href="http://www.oac.uci.edu/indiv/ehood/man2html.html">man2html</a>
+</ADDRESS>
+</BODY>
+</HTML>

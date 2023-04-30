@@ -1,0 +1,47 @@
+<HTML>
+<BODY>
+<PRE>
+<!-- Manpage converted by man2html 3.0.1 -->
+
+</PRE>
+<H2>SYNOPSIS</H2><PRE>
+       <B>#include</B> <B>&lt;liburing.h&gt;</B>
+
+       <B>void</B> <B>io_uring_cqe_seen(struct</B> <B>io_uring</B> <B>*</B><I>ring</I><B>,</B>
+                              <B>struct</B> <B>io_uring_cqe</B> <B>*</B><I>cqe</I><B>);</B>
+
+
+</PRE>
+<H2>DESCRIPTION</H2><PRE>
+       The <B><A HREF="io_uring_cqe_seen.3.html">io_uring_cqe_seen(3)</A></B> function marks the IO completion <I>cqe</I> belonging
+       to the <I>ring</I> param as consumed.
+
+       After the caller has submitted a request with <B><A HREF="io_uring_submit.3.html">io_uring_submit(3)</A></B>, the
+       application can retrieve the completion with <B><A HREF="io_uring_wait_cqe.3.html">io_uring_wait_cqe(3)</A></B>,
+       <B><A HREF="io_uring_peek_cqe.3.html">io_uring_peek_cqe(3)</A></B>, or any of the other CQE retrieval helpers, and mark
+       it as consumed with <B><A HREF="io_uring_cqe_seen.3.html">io_uring_cqe_seen(3)</A></B>.
+
+       Completions must be marked as completed so their slot can get reused.
+
+
+</PRE>
+<H2>RETURN VALUE</H2><PRE>
+       None
+
+
+</PRE>
+<H2>SEE ALSO</H2><PRE>
+       <B><A HREF="io_uring_submit.3.html">io_uring_submit(3)</A></B>, <B><A HREF="io_uring_wait_cqe.3.html">io_uring_wait_cqe(3)</A></B>, <B><A HREF="io_uring_peek_cqe.3.html">io_uring_peek_cqe(3)</A></B>,
+       <B><A HREF="io_uring_wait_cqes.3.html">io_uring_wait_cqes(3)</A></B>, <B><A HREF="io_uring_wait_cqe_timeout.3.html">io_uring_wait_cqe_timeout(3)</A></B>, <B><A HREF="io_uring_cqe_seen.3.html">io_uring_cqe_seen(3)</A></B>
+
+
+
+liburing-2.1                    November 15, 2021           <B><A HREF="io_uring_cqe_seen.3.html">io_uring_cqe_seen(3)</A></B>
+</PRE>
+<HR>
+<ADDRESS>
+Man(1) output converted with
+<a href="http://www.oac.uci.edu/indiv/ehood/man2html.html">man2html</a>
+</ADDRESS>
+</BODY>
+</HTML>

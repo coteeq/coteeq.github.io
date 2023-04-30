@@ -1,0 +1,79 @@
+<HTML>
+<BODY>
+<PRE>
+<!-- Manpage converted by man2html 3.0.1 -->
+
+</PRE>
+<H2>SYNOPSIS</H2><PRE>
+       <B>#include</B> <B>&lt;sys/socket.h&gt;</B>
+       <B>#include</B> <B>&lt;liburing.h&gt;</B>
+
+       <B>void</B> <B>io_uring_prep_socket(struct</B> <B>io_uring_sqe</B> <B>*</B><I>sqe</I><B>,</B>
+                                 <B>int</B> <I>domain</I><B>,</B>
+                                 <B>int</B> <I>type</I><B>,</B>
+                                 <B>int</B> <I>protocol</I><B>,</B>
+                                 <B>unsigned</B> <B>int</B> <I>flags</I><B>);</B>
+
+       <B>void</B> <B>io_uring_prep_socket_direct(struct</B> <B>io_uring_sqe</B> <B>*</B><I>sqe</I><B>,</B>
+                                        <B>int</B> <I>domain</I><B>,</B>
+                                        <B>int</B> <I>type</I><B>,</B>
+                                        <B>int</B> <I>protocol</I><B>,</B>
+                                        <B>unsigned</B> <B>int</B> <I>file</I><B>_</B><I>index</I><B>,</B>
+                                        <B>unsigned</B> <B>int</B> <I>flags</I><B>);</B>
+
+       <B>void</B> <B>io_uring_prep_socket_direct_alloc(struct</B> <B>io_uring_sqe</B> <B>*</B><I>sqe</I><B>,</B>
+                                        <B>int</B> <I>domain</I><B>,</B>
+                                        <B>int</B> <I>type</I><B>,</B>
+                                        <B>int</B> <I>protocol</I><B>,</B>
+                                        <B>unsigned</B> <B>int</B> <I>flags</I><B>);</B>
+
+
+</PRE>
+<H2>DESCRIPTION</H2><PRE>
+       The <B><A HREF="io_uring_prep_socket.3.html">io_uring_prep_socket(3)</A></B> function prepares a socket creation request.
+       The submission queue entry <I>sqe</I> is setup to use the communication domain
+       defined by <I>domain</I> and use the communication type defined by <I>type</I> and the
+       protocol set by <I>protocol</I>.  The <I>flags</I> argument are currently unused.
+
+       The <B><A HREF="io_uring_prep_socket_direct.3.html">io_uring_prep_socket_direct(3)</A></B> helper works just like
+       <B><A HREF="io_uring_prep_socket.3.html">io_uring_prep_socket(3)</A></B>, except it maps the socket to a direct descriptor
+       rather than return a normal file descriptor. The <I>file</I><B>_</B><I>index</I> argument
+       should be set to the slot that should be used for this socket.
+
+       The <B><A HREF="io_uring_prep_socket_direct_alloc.3.html">io_uring_prep_socket_direct_alloc(3)</A></B> helper works just like
+       <B><A HREF="io_uring_prep_socket_alloc.3.html">io_uring_prep_socket_alloc(3)</A></B>, except it allocates a new direct
+       descriptor rather than pass a free slot in. It is equivalent to using
+       <B><A HREF="io_uring_prep_socket_direct.3.html">io_uring_prep_socket_direct(3)</A></B> with <B>IORING_FILE_INDEX_ALLOC</B> as the
+       <I>file</I><B>_</B><I>index</I> <I>.</I>  Upon completion, the <I>res</I> field of the CQE will return the
+       direct slot that was allocated for the socket.
+
+       If the direct variants are used, the application must first have
+       registered a file table using <B><A HREF="io_uring_register_files.3.html">io_uring_register_files(3)</A></B> of the
+       appropriate size. Once registered, a direct socket request may use any
+       entry in that table, as long as it is within the size of the registered
+       table.  If a specified entry already contains a file, the file will first
+       be removed from the table and closed. It's consistent with the behavior
+       of updating an existing file with <B><A HREF="io_uring_register_files_update.3.html">io_uring_register_files_update(3)</A></B>.
+
+       For a direct descriptor socket request, the <I>file</I><B>_</B><I>index</I> argument can be
+       set to <B>IORING_FILE_INDEX_ALLOC</B>, In this case a free entry in io_uring
+       file table will be used automatically and the file index will be returned
+       actual error value, io_uring never uses <I>errno</I>.  Instead it returns the
+       negated <I>errno</I> directly in the CQE <I>res</I> field.
+
+
+</PRE>
+<H2>SEE ALSO</H2><PRE>
+       <B><A HREF="io_uring_get_sqe.3.html">io_uring_get_sqe(3)</A></B>, <B><A HREF="io_uring_submit.3.html">io_uring_submit(3)</A></B>, <B><A HREF="socket.2.html">socket(2)</A></B>
+
+
+
+liburing-2.2                      May 27, 2022           <B><A HREF="io_uring_prep_socket.3.html">io_uring_prep_socket(3)</A></B>
+</PRE>
+<HR>
+<ADDRESS>
+Man(1) output converted with
+<a href="http://www.oac.uci.edu/indiv/ehood/man2html.html">man2html</a>
+</ADDRESS>
+</BODY>
+</HTML>

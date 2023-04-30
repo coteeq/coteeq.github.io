@@ -1,0 +1,65 @@
+<HTML>
+<BODY>
+<PRE>
+<!-- Manpage converted by man2html 3.0.1 -->
+
+</PRE>
+<H2>SYNOPSIS</H2><PRE>
+       <B>#include</B> <B>&lt;fcntl.h&gt;</B>
+       <B>#include</B> <B>&lt;liburing.h&gt;</B>
+
+       <B>void</B> <B>io_uring_prep_tee(struct</B> <B>io_uring_sqe</B> <B>*</B><I>sqe</I><B>,</B>
+                              <B>int</B> <I>fd</I><B>_</B><I>in</I><B>,</B>
+                              <B>int</B> <I>fd</I><B>_</B><I>out</I><B>,</B>
+                              <B>unsigned</B> <B>int</B> <I>nbytes</I><B>,</B>
+                              <B>unsigned</B> <B>int</B> <I>splice</I><B>_</B><I>flags</I><B>);</B>
+
+
+</PRE>
+<H2>DESCRIPTION</H2><PRE>
+       The <B><A HREF="io_uring_prep_tee.3.html">io_uring_prep_tee(3)</A></B> function prepares a tee request. The submission
+       queue entry <I>sqe</I> is setup to use as input the file descriptor <I>fd</I><B>_</B><I>in</I> and as
+       output the file descriptor <I>fd</I><B>_</B><I>out</I> duplicating <I>nbytes</I> bytes worth of data.
+       <I>splice</I><B>_</B><I>flags</I> are modifier flags for the operation. See <B><A HREF="tee.2.html">tee(2)</A></B> for the
+       generic splice flags.
+
+       If the <I>fd</I><B>_</B><I>out</I> descriptor, <B>IOSQE_FIXED_FILE</B> can be set in the SQE to
+       indicate that. For the input file, the io_uring specific
+       <B>SPLICE_F_FD_IN_FIXED</B> can be set and <I>fd</I><B>_</B><I>in</I> given as a registered file
+       descriptor offset.
+
+       This function prepares an async <B><A HREF="tee.2.html">tee(2)</A></B> request. See that man page for
+       details.
+
+
+
+</PRE>
+<H2>RETURN VALUE</H2><PRE>
+       None
+
+
+</PRE>
+<H2>ERRORS</H2><PRE>
+       The CQE <I>res</I> field will contain the result of the operation. See the
+       related man page for details on possible values. Note that where
+       synchronous system calls will return <B>-1</B> on failure and set <I>errno</I> to the
+       actual error value, io_uring never uses <I>errno</I>.  Instead it returns the
+       negated <I>errno</I> directly in the CQE <I>res</I> field.
+
+
+</PRE>
+<H2>SEE ALSO</H2><PRE>
+       <B><A HREF="io_uring_get_sqe.3.html">io_uring_get_sqe(3)</A></B>, <B><A HREF="io_uring_submit.3.html">io_uring_submit(3)</A></B>, <B><A HREF="io_uring_register.2.html">io_uring_register(2)</A></B>, <B><A HREF="splice.2.html">splice(2)</A></B>,
+       <B><A HREF="tee.2.html">tee(2)</A></B>
+
+
+
+liburing-2.2                     March 13, 2022             <B><A HREF="io_uring_prep_tee.3.html">io_uring_prep_tee(3)</A></B>
+</PRE>
+<HR>
+<ADDRESS>
+Man(1) output converted with
+<a href="http://www.oac.uci.edu/indiv/ehood/man2html.html">man2html</a>
+</ADDRESS>
+</BODY>
+</HTML>

@@ -1,0 +1,45 @@
+<HTML>
+<BODY>
+<PRE>
+<!-- Manpage converted by man2html 3.0.1 -->
+
+
+</PRE>
+<H2>SYNOPSIS</H2><PRE>
+       <B>#include</B> <B>&lt;liburing.h&gt;</B>
+
+       <B>unsigned</B> <B>io_uring_sq_ready(const</B> <B>struct</B> <B>io_uring</B> <B>*</B><I>ring</I><B>);</B>
+
+
+</PRE>
+<H2>DESCRIPTION</H2><PRE>
+       The <B><A HREF="io_uring_sq_ready.3.html">io_uring_sq_ready(3)</A></B> function returns the number of unconsumed (if
+       SQPOLL) or unsubmitted entries that exist in the SQ ring belonging to the
+       <I>ring</I> param.
+
+       Usage of this function only applies if the ring has been setup with
+       <B>IORING_SETUP_SQPOLL,</B> where request submissions, and hence consumption
+       from the SQ ring, happens through a polling thread.
+
+
+
+</PRE>
+<H2>RETURN VALUE</H2><PRE>
+       Returns the number of unconsumed or unsubmitted entries in the  SQ ring.
+
+
+</PRE>
+<H2>SEE ALSO</H2><PRE>
+       <B><A HREF="io_uring_cq_ready.3.html">io_uring_cq_ready(3)</A></B>
+
+
+
+liburing-2.1                    January 25, 2022            <B><A HREF="io_uring_sq_ready.3.html">io_uring_sq_ready(3)</A></B>
+</PRE>
+<HR>
+<ADDRESS>
+Man(1) output converted with
+<a href="http://www.oac.uci.edu/indiv/ehood/man2html.html">man2html</a>
+</ADDRESS>
+</BODY>
+</HTML>

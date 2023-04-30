@@ -1,0 +1,65 @@
+<HTML>
+<BODY>
+<PRE>
+<!-- Manpage converted by man2html 3.0.1 -->
+
+</PRE>
+<H2>SYNOPSIS</H2><PRE>
+       <B>#include</B> <B>&lt;liburing.h&gt;</B>
+
+       <B>void</B> <B>io_uring_prep_fsync(struct</B> <B>io_uring_sqe</B> <B>*</B><I>sqe</I><B>,</B>
+                                <B>int</B> <I>fd</I><B>,</B>
+                                <B>unsigned</B> <I>flags</I><B>);</B>
+
+
+</PRE>
+<H2>DESCRIPTION</H2><PRE>
+       The <B><A HREF="io_uring_prep_fsync.3.html">io_uring_prep_fsync(3)</A></B> function prepares an fsync request. The
+       submission queue entry <I>sqe</I> is setup to use the file descriptor <I>fd</I> that
+       should get synced, with the modifier flags indicated by the <I>flags</I>
+       argument.
+
+       This function prepares an fsync request. It can act either like an
+       <B><A HREF="fsync.2.html">fsync(2)</A></B> operation, which is the default behavior. If
+       <B>IORING_FSYNC_DATASYNC</B> is set in the <I>flags</I> argument, then it behaves like
+       <B><A HREF="fdatasync.2.html">fdatasync(2)</A></B>.  If no range is specified, the <I>fd</I> will be synced from 0 to
+       end-of-file.
+
+       It's possible to specify a range to sync, if one is desired. If the <I>off</I>
+       field of the SQE is set to non-zero, then that indicates the offset to
+       start syncing at. If <I>len</I> is set in the SQE, then that indicates the size
+       in bytes to sync from the offset. Note that these fields are not accepted
+       by this helper, so they have to be set manually in the SQE after calling
+       this prep helper.
+
+
+
+</PRE>
+<H2>RETURN VALUE</H2><PRE>
+       None
+
+
+</PRE>
+<H2>ERRORS</H2><PRE>
+       The CQE <I>res</I> field will contain the result of the operation. See the
+       related man page for details on possible values. Note that where
+       synchronous system calls will return <B>-1</B> on failure and set <I>errno</I> to the
+       actual error value, io_uring never uses <I>errno</I>.  Instead it returns the
+       negated <I>errno</I> directly in the CQE <I>res</I> field.
+
+
+</PRE>
+<H2>SEE ALSO</H2><PRE>
+       <B><A HREF="io_uring_get_sqe.3.html">io_uring_get_sqe(3)</A></B>, <B><A HREF="io_uring_submit.3.html">io_uring_submit(3)</A></B>, <B><A HREF="fsync.2.html">fsync(2)</A></B>, <B><A HREF="fdatasync.2.html">fdatasync(2)</A></B>
+
+
+
+liburing-2.2                     March 12, 2022           <B><A HREF="io_uring_prep_fsync.3.html">io_uring_prep_fsync(3)</A></B>
+</PRE>
+<HR>
+<ADDRESS>
+Man(1) output converted with
+<a href="http://www.oac.uci.edu/indiv/ehood/man2html.html">man2html</a>
+</ADDRESS>
+</BODY>
+</HTML>

@@ -1,0 +1,60 @@
+<HTML>
+<BODY>
+<PRE>
+<!-- Manpage converted by man2html 3.0.1 -->
+
+</PRE>
+<H2>SYNOPSIS</H2><PRE>
+       <B>#include</B> <B>&lt;liburing.h&gt;</B>
+
+       <B>void</B> <B>io_uring_prep_remove_buffers(struct</B> <B>io_uring_sqe</B> <B>*</B><I>sqe</I><B>,</B>
+                                          <B>int</B> <I>nr</I><B>,</B>
+                                          <B>int</B> <I>bgid</I><B>);</B>
+
+
+</PRE>
+<H2>DESCRIPTION</H2><PRE>
+       The <B><A HREF="io_uring_prep_remove_buffers.3.html">io_uring_prep_remove_buffers(3)</A></B> function prepares a request for
+       removing previously supplied buffers. The submission queue entry <I>sqe</I> is
+       setup to remove <I>nr</I> number of buffers from the buffer group ID indicated
+       by <I>bgid</I>.
+
+
+
+</PRE>
+<H2>RETURN VALUE</H2><PRE>
+       None
+
+
+</PRE>
+<H2>ERRORS</H2><PRE>
+       These are the errors that are reported in the CQE <I>res</I> field. On success,
+       <I>res</I> will contain the number of successfully removed buffers. On error,
+       the following errors can occur.
+
+       <B>-ENOMEM</B>
+              The kernel was unable to allocate memory for the request.
+
+       <B>-EINVAL</B>
+              One of the fields set in the SQE was invalid.
+
+       <B>-ENOENT</B>
+              No buffers exist at the specified <I>bgid</I> buffer group ID.
+
+
+</PRE>
+<H2>SEE ALSO</H2><PRE>
+       <B><A HREF="io_uring_get_sqe.3.html">io_uring_get_sqe(3)</A></B>, <B><A HREF="io_uring_submit.3.html">io_uring_submit(3)</A></B>, <B><A HREF="io_uring_register.2.html">io_uring_register(2)</A></B>,
+       <B><A HREF="io_uring_prep_provide_buffers.3.html">io_uring_prep_provide_buffers(3)</A></B>
+
+
+
+liburing-2.2                     March 13, 2022  <B><A HREF="io_uring_prep_remove_buffers.3.html">io_uring_prep_remove_buffers(3)</A></B>
+</PRE>
+<HR>
+<ADDRESS>
+Man(1) output converted with
+<a href="http://www.oac.uci.edu/indiv/ehood/man2html.html">man2html</a>
+</ADDRESS>
+</BODY>
+</HTML>
